@@ -1,0 +1,23 @@
+@import '../../layout/main.css';
+
+.signup-container {
+  height: 615px;
+  width: 340px;
+  border-radius: 12px;
+  background-color: var(--lighter-color);
+  text-align: center;
+}
+
+.title {
+  margin: 62px auto 29px;
+}
+
+.signup-form {
+  margin: 30px;
+  text-align: left;
+}
+
+.login-link {
+  color: #999999;
+  display: block;
+}

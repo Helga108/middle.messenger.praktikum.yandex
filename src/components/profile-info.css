@@ -1,0 +1,29 @@
+.profile-info-container {
+  display: flex;
+  flex-direction: row;
+  items-justify: center;
+  align-items: center;
+  justify-content: left;
+  margin: 0 47px 3px;
+  & p {
+    padding: 0px;
+    margin: 0px;
+  }
+}
+
+.icon {
+  width: 24px;
+  margin-right: 10px;
+}
+.label {
+  width: 118px;
+  text-align: left;
+  font-weight: 300;
+  font-size: 13px;
+}
+.value {
+  width: 100%;
+  text-align: right;
+  font-weight: 500;
+  font-size: 13px;
+}

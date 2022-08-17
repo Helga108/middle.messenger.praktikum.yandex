@@ -1,0 +1,24 @@
+@import '../../layout/main.css';
+
+.login-container {
+  width: 340px;
+  height: 460px;
+  border-radius: 12px;
+  background-color: var(--lighter-color);
+  text-align: center;
+}
+
+.login-title {
+  margin: 62px auto 29px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.signup-link {
+  color: #999999;
+  display: block;
+}
