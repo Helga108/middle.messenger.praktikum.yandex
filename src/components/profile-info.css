@@ -5,10 +5,12 @@
   align-items: center;
   justify-content: left;
   margin: 0 47px 3px;
-  & p {
-    padding: 0px;
-    margin: 0px;
-  }
+  height: 36px;
+}
+
+.profile-info-container {
+  padding: 0px;
+  margin: 0px;
 }
 
 .icon {
