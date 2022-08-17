@@ -1,0 +1,13 @@
+@import '../../layout/main.css';
+
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.back-link {
+  color: var(--accent-color-2);
+}
