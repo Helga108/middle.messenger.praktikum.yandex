@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main.  ### ВАЖНО: pull request должен называться “Sprint i” (i — номер спринта).",
   "scripts": {
-    "start": "npx parcel src/index.hbs",
+    "start": "parcel build src/index.hbs",
+    "dev": "npx parcel src/index.hbs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,8 +25,7 @@
     "@anikin/parcel-transformer-handlebars": "^1.0.9",
     "parcel": "^2.7.0",
     "postcss": "^8.4.16",
-    "postcss-import": "^14.1.0",
-    "postcss-nested": "^5.0.6"
+    "postcss-import": "^14.1.0"
   },
   "dependencies": {
     "@anikin/parcel-transformer-handlebars": "^1.0.9",
