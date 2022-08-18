@@ -1,21 +1,12 @@
 @import 'npm:normalize.css';
 @import './variables.css';
+@import './fonts.css';
 @import '../components/button.css';
 @import '../components/input.css';
 @import '../components/profile-info.css';
 @import '../components/error.css';
+@import '../components/settings-form.css';
 
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../../static/fonts/poppins-v20-latin-regular.eot'); /* IE9 Compat Modes */
-  src: local(''), url('../../static/fonts/poppins-v20-latin-regular.eot?#iefix') format('embedded-opentype'),
-    /* IE6-IE8 */ url('../../static/fonts/poppins-v20-latin-regular.woff2') format('woff2'),
-    /* Super Modern Browsers */ url('../../static/fonts/poppins-v20-latin-regular.woff') format('woff'),
-    /* Modern Browsers */ url('../../static/fonts/poppins-v20-latin-regular.ttf') format('truetype'),
-    /* Safari, Android, iOS */ url('../../static/fonts/poppins-v20-latin-regular.svg#Poppins') format('svg'); /* Legacy iOS */
-}
 body {
   font-family: 'Poppins', sans-serif;
   font-size: 15px;
