@@ -1,0 +1,24 @@
+@import '../../layout/main.css';
+
+.chats-container {
+  height: 100vh;
+  display: flex;
+}
+
+.chat-thread,
+.chats-list {
+  display: flex;
+  height: 100vh;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.chats-list {
+  width: 310px;
+  border-right: 1px solid #2e374d;
+}
+
+.chat-thread {
+  width: 100%;
+}
