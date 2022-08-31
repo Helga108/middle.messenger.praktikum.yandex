@@ -5,6 +5,10 @@
   display: flex;
 }
 
+.chats-toolbar {
+  width: 60px;
+}
+
 .chat-thread,
 .chats-list {
   display: flex;

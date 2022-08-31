@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main.  ### ВАЖНО: pull request должен называться “Sprint i” (i — номер спринта).",
   "scripts": {
-    "start": "npm run build && node ./server.js",
-    "build": "parcel build src/index.hbs",
-    "dev": "npx parcel src/index.hbs",
+    "start": "npm run build && node ./server.js -port 3000",
+    "build": "parcel build src/index.html",
+    "dev": "parcel src/index.html --no-cache",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,21 +23,22 @@
   },
   "homepage": "https://github.com/Helga108/middle.messenger.praktikum.yandex#readme",
   "devDependencies": {
-    "@anikin/parcel-transformer-handlebars": "^1.0.9",
+    "@types/handlebars": "^4.1.0",
     "parcel": "^2.7.0",
     "postcss": "^8.4.16",
-    "postcss-import": "^14.1.0"
+    "postcss-import": "^14.1.0",
+    "typescript": "^4.8.2"
   },
   "dependencies": {
-    "@anikin/parcel-transformer-handlebars": "^1.0.9",
+    "@anikin/parcel-transformer-handlebars-precompile": "^1.0.1",
     "express": "^4.18.1",
     "handlebars": "^4.7.7",
+    "nanoid": "^4.0.0",
     "normalize.css": "^8.0.1"
   },
   "@parcel/transformer-css": {
-      "drafts": {
-        "nesting": true
-      }
+    "drafts": {
+      "nesting": true
     }
   }
-
+}
