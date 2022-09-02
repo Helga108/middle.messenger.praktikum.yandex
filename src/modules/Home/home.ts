@@ -3,12 +3,11 @@ import template from './home.hbs';
 
 interface HomePageProps {
   title: string;
-  views: { name: string; link: string; }[]
+  views: { name: string; link: string }[];
 }
-
-export class HomePage extends Block {
+export default class HomePage extends Block {
   constructor(props: HomePageProps) {
-    super('div', props);
+    super(props);
   }
 
   render() {

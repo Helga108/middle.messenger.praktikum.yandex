@@ -1,14 +1,15 @@
-@import 'npm:normalize.css';
-@import './variables.css';
-@import './fonts.css';
-@import '../components/Button/button.css';
-@import '../components/input.css';
-@import '../components/profile-info.css';
-@import '../components/error.css';
-@import '../components/settings-form.css';
+@import "npm:normalize.css";
+@import "./variables.css";
+@import "./fonts.css";
+@import "../components/Button/button.css";
+@import "../components/Input/input.css";
+@import "../components/profile-info.css";
+@import "../components/error.css";
+@import "../components/settings-form.css";
+@import "../modules/Login/login.css";
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 15px;
   line-height: 30px;
   color: var(--text-color-main);
@@ -34,7 +35,7 @@ input:focus {
 }
 
 .h1 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
