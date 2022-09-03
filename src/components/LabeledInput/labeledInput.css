@@ -1,0 +1,19 @@
+.form-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  background-color: var(--lighter-color);
+  border-bottom: 1px solid #eaeaea;
+}
+
+.label {
+  font-size: 11px;
+  color: #999999;
+}
+
+.errorVisible {
+  display: block;
+}
+.errorHidden {
+  display: none;
+}
