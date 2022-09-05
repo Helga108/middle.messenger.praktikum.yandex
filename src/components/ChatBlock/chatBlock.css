@@ -1,0 +1,20 @@
+.chat-block-wrapper {
+  display: flex;
+  flex-direction: row;
+  padding: 12px 4px 12px 18px;
+}
+
+.chat-block-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+.chat-block-column {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.chat-block-image {
+}

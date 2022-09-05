@@ -3,10 +3,12 @@
 .chats-container {
   height: 100vh;
   display: flex;
+  width: 100%;
 }
 
 .chats-toolbar {
   width: 60px;
+  background-color: var(--lighter-color);
 }
 
 .chat-thread,
@@ -20,7 +22,7 @@
 
 .chats-list {
   width: 310px;
-  border-right: 1px solid #2e374d;
+  border-right: 1px solid var(--border-color);
 }
 
 .chat-thread {

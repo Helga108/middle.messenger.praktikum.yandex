@@ -1,12 +1,12 @@
-import { nanoid } from 'nanoid';
-import { EventBus } from './EventBus';
+import { nanoid } from "nanoid";
+import { EventBus } from "./EventBus";
 
 class Block {
   static EVENTS = {
-    INIT: 'init',
-    FLOW_CDM: 'flow:component-did-mount',
-    FLOW_CDU: 'flow:component-did-update',
-    FLOW_RENDER: 'flow:render',
+    INIT: "init",
+    FLOW_CDM: "flow:component-did-mount",
+    FLOW_CDU: "flow:component-did-update",
+    FLOW_RENDER: "flow:render",
   };
 
   public id = nanoid(6);
@@ -96,7 +96,7 @@ class Block {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 
     Object.values(this.children).forEach((child) =>
-      child.dispatchComponentDidMount(),
+      child.dispatchComponentDidMount()
     );
   }
 
@@ -128,9 +128,13 @@ class Block {
 
     const newElement = fragment.firstElementChild as HTMLElement;
 
+    if (this._element) {
+      this._element.replaceWith(newElement);
+    }
     this._element = newElement;
 
     this._addEvents();
+    console.log("_render happened");
   }
 
   protected compile(template: (context: any) => string, context: any) {
@@ -142,7 +146,7 @@ class Block {
 
     const html = template(contextAndStubs);
 
-    const temp = document.createElement('template');
+    const temp = document.createElement("template");
 
     temp.innerHTML = html;
 
@@ -176,7 +180,7 @@ class Block {
     return new Proxy(props, {
       get(target, prop) {
         const value = target[prop];
-        return typeof value === 'function' ? value.bind(target) : value;
+        return typeof value === "function" ? value.bind(target) : value;
       },
       set(target, prop, value) {
         const oldTarget = { ...target };
@@ -187,17 +191,17 @@ class Block {
         return true;
       },
       deleteProperty() {
-        throw new Error('Нет доступа');
+        throw new Error("Нет доступа");
       },
     });
   }
 
   show() {
-    this.getContent()!.style.display = 'block';
+    this.getContent()!.style.display = "block";
   }
 
   hide() {
-    this.getContent()!.style.display = 'none';
+    this.getContent()!.style.display = "none";
   }
 }
 

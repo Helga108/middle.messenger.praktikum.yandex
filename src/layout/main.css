@@ -8,8 +8,10 @@
 @import "../components/error.css";
 @import "../components/settings-form.css";
 @import "../modules/Login/login.css";
+@import "../modules/Signup/signup.css";
 @import "../components/InputError/inputError.css";
-
+@import "../modules/ChatList/chatList.css";
+@import "../components/ChatBlock/chatBlock.css";
 body {
   font-family: "Poppins", sans-serif;
   font-size: 15px;

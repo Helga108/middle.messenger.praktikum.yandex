@@ -4,16 +4,12 @@ import template from "./inputError.hbs";
 interface InputErrorProps {
   errorText: string;
   error: boolean;
+  errorVisibilityClass: string;
 }
 
 export default class InputError extends Block {
   constructor(props: InputErrorProps) {
     super(props);
-    // if (props.error) {
-    //   this.show();
-    // } else {
-    //   this.hide();
-    // }
   }
 
   render() {

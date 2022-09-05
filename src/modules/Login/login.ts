@@ -2,7 +2,8 @@ import Block from "../../utils/Block";
 import template from "./login.hbs";
 import Button from "../../components/Button/button";
 import LabeledInput from "../../components/LabeledInput/labeledInput";
-import InputError from "../../components/InputError/inputError";
+import { validationPatternsLib } from "../../utils/ValidationPatternsLib";
+
 interface LoginProps {
   title: string;
 }
@@ -16,28 +17,30 @@ export default class Login extends Block {
       name: "login",
       type: "text",
       label: "Login",
-      value: "",
       events: {
         click: () => console.log("login event"),
       },
       error: false,
       errorText: "Wrong login",
+      validationPattern: validationPatternsLib.login,
+      errorVisibilityClass: "",
     });
     this.children.inputPassword = new LabeledInput({
       name: "password",
       type: "password",
       label: "Password",
-      value: "",
       events: {
         click: () => console.log("password event"),
       },
       error: false,
       errorText: "Wrong password",
+      validationPattern: validationPatternsLib.password,
+      errorVisibilityClass: "",
     });
     this.children.button = new Button({
       label: "Log in",
       events: {
-        click: this.submitLiginForm,
+        click: (e: Event) => this.submitLiginForm(e),
       },
     });
   }
@@ -46,9 +49,24 @@ export default class Login extends Block {
     return this.compile(template, this.props);
   }
 
-  submitLiginForm() {
-    const loginValue = this.children.inputLogin.props.value;
-    const passwordValue = this.children.inputPassword.props.value;
-    console.log("Clicked!!!!", loginValue, passwordValue);
+  submitLiginForm(e: Event) {
+    e.preventDefault();
+
+    const formResult = {};
+
+    Object.keys(this.children).forEach((child) => {
+      if (this.children[child] instanceof LabeledInput) {
+        this.children[child].validate(this.children[child].getInputValue());
+      }
+    });
+
+    Object.keys(this.children).forEach((child) => {
+      if (this.children[child] instanceof LabeledInput) {
+        formResult[this.children[child].props.name] =
+          this.children[child].getInputValue();
+      }
+    });
+
+    console.log(formResult);
   }
 }
