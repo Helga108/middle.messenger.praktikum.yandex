@@ -1,7 +1,4 @@
-@import '../../layout/main.css';
-
 .settings-container {
-  height: 615px;
   width: 340px;
   border-radius: 12px;
   background-color: var(--lighter-color);
@@ -9,6 +6,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
 }
 .settings-form {
   margin-top: 180px;

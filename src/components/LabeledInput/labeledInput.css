@@ -3,7 +3,6 @@
   flex-direction: column;
   align-items: left;
   background-color: var(--lighter-color);
-  border-bottom: 1px solid #eaeaea;
 }
 
 .label {
@@ -11,8 +10,6 @@
   color: #999999;
 }
 
-.input {
-  background-color: transparent;
-  border: none;
-  color: #ffffff;
+.form-input-container input {
+  border-bottom: 1px solid #eaeaea;
 }

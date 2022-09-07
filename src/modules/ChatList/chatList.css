@@ -1,8 +1,18 @@
-@import '../../layout/main.css';
+@import "../../layout/main.css";
 
 .chats-container {
   height: 100vh;
   display: flex;
+  width: 100%;
+}
+
+.chats-toolbar {
+  width: 60px;
+  background-color: var(--lighter-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px;
 }
 
 .chat-thread,
@@ -16,9 +26,20 @@
 
 .chats-list {
   width: 310px;
-  border-right: 1px solid #2e374d;
+  border-right: 1px solid var(--border-color);
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 5px;
 }
 
 .chat-thread {
   width: 100%;
+}
+
+.chatlist-profile-button {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: var(--neutral-color);
 }
