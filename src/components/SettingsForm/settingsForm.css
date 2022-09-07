@@ -1,29 +1,28 @@
 .settings-form-item-container {
   display: flex;
-  width: 100%;
-  display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   margin-bottom: 8px;
 }
 
 .settings-form-item-label {
   width: 100px;
-  text-align: left;
   margin-left: 10px;
   font-weight: 300;
   font-size: 13px;
+  text-align: left;
 }
 
 .settings-form-input {
   width: 136px;
-  background-color: var(--body-color);
-  color: var(--text-color-main);
-  border: 0;
-  border-radius: 10px;
   height: 25px;
+  padding: 0 10px;
+  color: var(--text-color-main);
   font-weight: 500;
   font-size: 13px;
   text-align: right;
-  padding: 0 10px;
+  background-color: var(--body-color);
+  border: 0;
+  border-radius: 10px;
 }

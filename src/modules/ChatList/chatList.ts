@@ -75,7 +75,7 @@ export default class ChatList extends Block {
     });
     (this.children.chatBlock as Block).setProps({
       selected: true,
-      wrapperClassName: "chat-block-wrapper__selected",
+      wrapperClassName: "chat-block-wrapper-selected",
     });
   }
 

@@ -1,12 +1,11 @@
 @import "../../layout/main.css";
 
 .signup-container {
-  width: 340px;
-  border-radius: 12px;
-  background-color: var(--lighter-color);
-  text-align: center;
   display: block;
-  overflow: auto;
+  width: 340px;
+  text-align: center;
+  background-color: var(--lighter-color);
+  border-radius: 12px;
 }
 
 .title {
@@ -14,13 +13,13 @@
 }
 
 .signup-form {
-  margin: 30px 30px 0px;
+  margin: 30px 30px 0;
 }
 
 .login-link {
-  color: #999999;
   display: block;
   margin-bottom: 30px;
+  color: #999;
 }
 
 .signup-container button {
