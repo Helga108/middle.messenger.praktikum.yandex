@@ -5,7 +5,7 @@
 }
 
 .label {
-  color: #999;
+  color: var(--link-color);
   font-size: 11px;
 }
 

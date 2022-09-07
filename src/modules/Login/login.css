@@ -20,7 +20,7 @@
 
 .signup-link {
   display: block;
-  color: #999;
+  color: var(--link-color);
 }
 
 .login-container input {

@@ -19,8 +19,6 @@ class Block {
 
   private _element: HTMLElement | null = null;
 
-  private _meta: { props: object };
-
   /** JSDoc
 
    * @param {Object} props
@@ -31,10 +29,6 @@ class Block {
     const eventBus = new EventBus();
 
     const { props, children } = this._getChildrenAndProps(propsWithChildren);
-
-    this._meta = {
-      props,
-    };
 
     this.children = children;
     this.props = this._makePropsProxy(props);
