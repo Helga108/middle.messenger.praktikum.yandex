@@ -2,9 +2,11 @@
   --body-color: #1b202d;
   --lighter-color: #292f3f;
   --text-color-main: #fff;
+  --text-color-secondary: #000;
   --accent-color-main: #f1c40f;
   --accent-color-2: #3f93ef;
   --error-color: #ff80ff;
   --border-color: #2e374d;
   --neutral-color: #efefef;
+  --link-color: #999;
 }

@@ -19,7 +19,7 @@
 .login-link {
   display: block;
   margin-bottom: 30px;
-  color: #999;
+  color: var(--link-color);
 }
 
 .signup-container button {
