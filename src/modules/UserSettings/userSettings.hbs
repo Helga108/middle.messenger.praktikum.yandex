@@ -1,36 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./userSettings.css">
-  <title>User Settings</title>
-</head>
-<body>
-  <div class="page-container">
-  <div class="user-settings-container">
-    <div class="main-info">
-      <div class="avatar-container"><img src="../../../static/images/generic-avatar.png" width="46px" class="main-info-img"/></div>
-      <div class="main-info-text">
-      <p class="main-info-text_name">Name</p>
-      <p>+134232342</p>
-      <p>@pkmn</p>
-      </div>
-    </div>
-    <div class="detailed-info">
-      {{> profile-info icon="../../../static/icons/name.svg" label="Name" value="Packman"}}
-      {{> profile-info icon="../../../static/icons/name.svg" label="Last name" value="Packmanovich"}}
-      {{> profile-info icon="../../../static/icons/at.svg" label="Handle" value="@pkmn"}}
-      {{> profile-info icon="../../../static/icons/login.svg" label="Login" value="pkmn"}}
-      {{> profile-info icon="../../../static/icons/mail.svg" label="Email" value="pkmn@prtnml.com"}}
-      {{> profile-info icon="../../../static/icons/phone.svg" label="Phone" value="+13334214"}}
-    </div>
-    <div class="buttons-block">
-      {{> button label='Edit'}}
-      {{> button label='Change password'}}
+<div class="user-settings-container">
+  <div class="main-info">
+    <div class="avatar-container"><img
+        src={{avatar}}
+        width="46px"
+        class="main-info-img"
+      /></div>
+    <div class="main-info-text">
+      <p class="main-info-text_name">{{name}}</p>
+      <p>{{phone}}</p>
+      <p>{{handle}}</p>
     </div>
   </div>
+  <div class="detailed-info">
+    {{{infoName}}}
+    {{{infoLastName}}}
+    {{{infoHandle}}}
+    {{{infoLogin}}}
+    {{{infoEmail}}}
+    {{{infoPhone}}}
   </div>
-</body>
-</html>
+  <div class="buttons-block">
+    {{{buttonEdit}}}
+    {{{buttonNewPassword}}}
+  </div>
+</div>

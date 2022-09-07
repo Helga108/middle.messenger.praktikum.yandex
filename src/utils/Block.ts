@@ -13,13 +13,13 @@ class Block {
 
   protected props: any;
 
-  public children: Record<string, Block>;
+  public children: Record<string, Block | Block[]>;
 
   private eventBus: () => EventBus;
 
   private _element: HTMLElement | null = null;
 
-  private _meta: { props: any };
+  private _meta: { props: object };
 
   /** JSDoc
 
@@ -48,7 +48,7 @@ class Block {
 
   _getChildrenAndProps(childrenAndProps: any) {
     const props: Record<string, any> = {};
-    const children: Record<string, Block> = {};
+    const children: Record<string, Block | Block[]> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
       if (value instanceof Block) {
@@ -95,9 +95,13 @@ class Block {
   public dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 
-    Object.values(this.children).forEach((child) =>
-      child.dispatchComponentDidMount()
-    );
+    Object.values(this.children).forEach((child) => {
+      if (Array.isArray(child)) {
+        child.map((chld) => chld.dispatchComponentDidMount());
+        return;
+      }
+      child.dispatchComponentDidMount();
+    });
   }
 
   private _componentDidUpdate(oldProps: object, newProps: object) {
@@ -111,7 +115,7 @@ class Block {
     return true;
   }
 
-  setProps = (nextProps: any) => {
+  public setProps = (nextProps: any) => {
     if (!nextProps) {
       return;
     }
@@ -134,13 +138,19 @@ class Block {
     this._element = newElement;
 
     this._addEvents();
-    console.log("_render happened");
   }
 
   protected compile(template: (context: any) => string, context: any) {
     const contextAndStubs = { ...context };
 
     Object.entries(this.children).forEach(([name, component]) => {
+      if (Array.isArray(component)) {
+        contextAndStubs[name] = component.map(
+          (childComponent) =>
+            `<div data-id="id-${(childComponent as Block).id}"></div>`
+        );
+        return;
+      }
       contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
     });
 
@@ -151,6 +161,12 @@ class Block {
     temp.innerHTML = html;
 
     Object.entries(this.children).forEach(([, component]) => {
+      if (Array.isArray(component)) {
+        const stub = component.map((cmp) => {
+          temp.content.querySelector(`[data-id="${cmp.id}"]`);
+        });
+        return;
+      }
       const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
 
       if (!stub) {

@@ -112,18 +112,19 @@ export default class Signup extends Block {
   submitLiginForm(e: Event) {
     e.preventDefault();
 
-    const formResult = {};
+    const formResult: any = {};
 
     Object.keys(this.children).forEach((child) => {
       if (this.children[child] instanceof LabeledInput) {
-        this.children[child].validate(this.children[child].getInputValue());
+        (this.children[child] as LabeledInput).validate();
       }
     });
 
     Object.keys(this.children).forEach((child) => {
       if (this.children[child] instanceof LabeledInput) {
-        formResult[this.children[child].props.name] =
-          this.children[child].getInputValue();
+        formResult[(this.children[child] as LabeledInput).getName()] = (
+          this.children[child] as LabeledInput
+        ).getInputValue();
       }
     });
 

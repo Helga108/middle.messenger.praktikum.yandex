@@ -1,14 +1,12 @@
-<div class="chat-block-wrapper">
-  <img
-    class="chat-block-avatar"
-    src="../../../static/images/generic-avatar.png"
-  />
+<div class="chat-block-wrapper {{wrapperClassName}}">
+  {{log wrapperClassName}}
+  <div class="chat-block-avatar"></div>
   <div class="chat-block-column">
-    <div>{{name}}</div>
-    <div>{{lastMessageAbstract}}</div>
+    <div class="chat-block-name">{{name}}</div>
+    <div class="chat-block-last-msg">{{lastMessageAbstract}}</div>
   </div>
-  <div class="chat-block-column">
-    <div>{{lastMessageTime}}</div>
-    <div>{{newMessagesCount}}</div>
+  <div class="chat-block-column-2">
+    <div class="chat-block-time">{{lastMessageTime}}</div>
+    <div class="chat-block-new-msg">{{newMessagesCount}}</div>
   </div>
 </div>

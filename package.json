@@ -13,9 +13,6 @@
     "type": "git",
     "url": "git+https://github.com/Helga108/middle.messenger.praktikum.yandex.git"
   },
-  "engines": {
-    "node": ">=12.0"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -36,6 +33,9 @@
     "postcss": "8.4.16",
     "postcss-import": "14.1.0",
     "prettier": "2.7.1",
+    "stylelint": "^14.11.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^28.0.0",
     "typescript": "4.8.2"
   },
   "dependencies": {

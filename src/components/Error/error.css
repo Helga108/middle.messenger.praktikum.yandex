@@ -10,3 +10,9 @@
   font-size: 20px;
   margin-bottom: 70px;
 }
+
+.error-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -7,7 +7,7 @@ export const chatsData = {
       userAvatar: "../../../static/images/generic-avatar.png",
       messages: [
         { dateTime: 13213132, content: "Hello!", authorId: 12312313 },
-        { dateTime: 1321323132, content: "Hello you!", authorId: 123132 },
+        { dateTime: 1321323132, content: "Hello you!", authorId: 123123 },
       ],
     },
     41222231312: {

@@ -39,8 +39,16 @@ export default class LabeledInput extends Block {
     return this.value;
   }
 
+  getName() {
+    return this.props.name;
+  }
+
+  getLabel() {
+    return this.props.label;
+  }
+
   onFocus() {
-    this.children.errorMessage.setProps({
+    (this.children.errorMessage as Block).setProps({
       errorVisibilityClass: "errorHidden",
     });
   }
@@ -48,7 +56,7 @@ export default class LabeledInput extends Block {
   onBlur() {
     const validatationResult = this.validate();
     if (!validatationResult) {
-      this.children.errorMessage.setProps({
+      (this.children.errorMessage as Block).setProps({
         errorVisibilityClass: "errorVisible",
       });
     }
@@ -57,13 +65,12 @@ export default class LabeledInput extends Block {
   validate() {
     const reg = new RegExp(this.props.validationPattern);
     const res = reg.test(this.value);
-    console.log("regextest", res);
     return res;
   }
 
   onChange(e: Event) {
     this.value = (e.target as HTMLInputElement).value;
-    this.children.errorMessage.setProps({
+    (this.children.errorMessage as Block).setProps({
       errorVisibilityClass: "errorHidden",
     });
   }

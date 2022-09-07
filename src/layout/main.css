@@ -4,14 +4,20 @@
 @import "../components/Button/button.css";
 @import "../components/Input/input.css";
 @import "../components/LabeledInput/labeledInput.css";
-@import "../components/profile-info.css";
-@import "../components/error.css";
-@import "../components/settings-form.css";
+@import "../components/ProfileInfo/profileInfo.css";
+@import "../components/Error/error.css";
+@import "../components/SettingsForm/settingsForm.css";
 @import "../modules/Login/login.css";
 @import "../modules/Signup/signup.css";
 @import "../components/InputError/inputError.css";
 @import "../modules/ChatList/chatList.css";
 @import "../components/ChatBlock/chatBlock.css";
+@import "../components/ChatThread/chatThread.css";
+@import "../modules/Errors/errors.css";
+@import "../modules/UserSettings/userSettings.css";
+@import "../modules/EditUserSettings/editUserSettings.css";
+@import "../modules/ChangePassword/changePassword.css";
+
 body {
   font-family: "Poppins", sans-serif;
   font-size: 15px;

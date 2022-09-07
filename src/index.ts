@@ -2,6 +2,11 @@ import ChatList from "./modules/ChatList/chatList";
 import HomePage from "./modules/Home/home";
 import Login from "./modules/Login/login";
 import Signup from "./modules/Signup/signup";
+import ErrorsPage from "./modules/Errors/errors";
+import UserSettings from "./modules/UserSettings/userSettings";
+import avatar from "../static/images/generic-avatar.png";
+import EditUserSettings from "./modules/EditUserSettings/editUserSettings";
+import ChangePassword from "./modules/ChangePassword/changePassword";
 
 const views = [
   { name: "Login", link: "./modules/Login/login.hbs" },
@@ -47,6 +52,56 @@ window.addEventListener("DOMContentLoaded", () => {
       const chatListPage = new ChatList({ title: "Chat list" });
       root.append(chatListPage.getContent()!);
       chatListPage.dispatchComponentDidMount();
+      break;
+    }
+    case "/modules/UserSettings/userSettings.hbs": {
+      const userSettingsPage = new UserSettings({
+        title: "User Settings",
+        name: "Packman",
+        handle: "@pkmn",
+        phone: "+133224343",
+        avatar: avatar,
+      });
+      root.append(userSettingsPage.getContent()!);
+      userSettingsPage.dispatchComponentDidMount();
+      break;
+    }
+    case "/modules/EditUserSettings/editUserSettings.hbs": {
+      const editUserSettingsPage = new EditUserSettings({
+        title: "Edit User Settings",
+      });
+      root.append(editUserSettingsPage.getContent()!);
+      editUserSettingsPage.dispatchComponentDidMount();
+      break;
+    }
+    case "/modules/ChangePassword/changePassword.hbs": {
+      const changePasswordPage = new ChangePassword({
+        title: "Change Password",
+      });
+      root.append(changePasswordPage.getContent()!);
+      changePasswordPage.dispatchComponentDidMount();
+      break;
+    }
+    case "/modules/Errors/404.hbs": {
+      const errorPage = new ErrorsPage({
+        code: "404",
+        text: "Oops!",
+        backLink: "../ChatList/chatList.hbs",
+        backLinkText: "Back to chats",
+      });
+      root.append(errorPage.getContent()!);
+      errorPage.dispatchComponentDidMount();
+      break;
+    }
+    case "/modules/Errors/500.hbs": {
+      const errorPage = new ErrorsPage({
+        code: "500",
+        text: "Something went wrong :(",
+        backLink: "../ChatList/chatList.hbs",
+        backLinkText: "Back to chats",
+      });
+      root.append(errorPage.getContent()!);
+      errorPage.dispatchComponentDidMount();
       break;
     }
     default: {

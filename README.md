@@ -9,3 +9,5 @@ Start command: npm run start
 Dev server: npm run dev
 
 Build: npm run build
+
+Tools used: TypeScript, PostCss, Handlebars
