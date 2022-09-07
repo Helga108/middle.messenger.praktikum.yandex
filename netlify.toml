@@ -1,6 +1,6 @@
 [build]
     publish="dist"
 
-[redirects]
+[[redirects]]
   from = "/*"
   to="/index.html"
