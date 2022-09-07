@@ -4,5 +4,6 @@
     "stylelint-config-rational-order",
     "stylelint-prettier/recommended"
   ],
-  "plugins": ["stylelint-order"]
+  "plugins": ["stylelint-order"],
+  "ignoreFiles": ["dist/*"]
 }
