@@ -1,14 +1,14 @@
 .error-code,
 .error-text {
+  margin-bottom: 20px;
+  color: var(--accent-color-main);
   font-weight: 500;
   font-size: 40px;
-  color: var(--accent-color-main);
-  margin-bottom: 20px;
 }
 
 .error-text {
-  font-size: 20px;
   margin-bottom: 70px;
+  font-size: 20px;
 }
 
 .error-wrapper {

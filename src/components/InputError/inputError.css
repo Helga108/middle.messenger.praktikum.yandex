@@ -1,12 +1,13 @@
-.errorVisible,
-.errorHidden {
+.error-visible,
+.error-hidden {
   color: var(--error-color);
   font-size: 10px;
 }
 
-.errorVisible {
+.error-visible {
   display: flex;
 }
-.errorHidden {
+
+.error-hidden {
   display: none;
 }

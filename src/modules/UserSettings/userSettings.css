@@ -1,9 +1,9 @@
 .user-settings-container {
-  height: 615px;
   width: 340px;
-  border-radius: 12px;
-  background-color: var(--lighter-color);
+  height: 615px;
   text-align: center;
+  background-color: var(--lighter-color);
+  border-radius: 12px;
 }
 
 .main-info {
@@ -18,14 +18,14 @@
 }
 
 .main-info > p {
-  padding: 0px;
-  margin: 2px;
   height: 19px;
+  margin: 2px;
+  padding: 0;
 }
 
 .main-info-img {
-  height: 45px;
   width: 45px;
+  height: 45px;
 }
 
 .detailed-info {
@@ -33,18 +33,18 @@
 }
 
 .avatar-container {
-  height: 80px;
-  width: 80px;
-  background: grey;
-  border-radius: 50%;
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  flex-wrap: nowrap;
+  width: 80px;
+  height: 80px;
   margin-right: 16px;
+  background: grey;
+  border-radius: 50%;
 }
 
-.main-info-text_name {
+.main-info-text-name {
   font-weight: 500;
   font-size: 13px;
 }
