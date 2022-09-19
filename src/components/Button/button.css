@@ -1,0 +1,24 @@
+.button {
+  display: inline-block;
+  height: 30px;
+  margin: 10px;
+  padding: 16px 31px;
+  color: var(--text-color-secondary);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1px;
+  text-decoration: none;
+  background-color: var(--accent-color-main);
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: var(--accent-color-main);
+}
+
+.button:active {
+  position: relative;
+  top: 1px;
+}

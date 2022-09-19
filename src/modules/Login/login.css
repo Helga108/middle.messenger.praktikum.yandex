@@ -1,11 +1,11 @@
-@import '../../layout/main.css';
+@import "../../layout/main.css";
 
 .login-container {
   width: 340px;
   height: 460px;
-  border-radius: 12px;
-  background-color: var(--lighter-color);
   text-align: center;
+  background-color: var(--lighter-color);
+  border-radius: 12px;
 }
 
 .login-title {
@@ -19,6 +19,12 @@
 }
 
 .signup-link {
-  color: #999999;
   display: block;
+  color: var(--link-color);
+}
+
+.login-container input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--neutral-color);
 }

@@ -1,0 +1,17 @@
+.form-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.label {
+  color: var(--link-color);
+  font-size: 11px;
+}
+
+.form-input-container input {
+  color: var(--text-color-main);
+  background-color: var(--lighter-color);
+  border: none;
+  border-bottom: 1px solid var(--neutral-color);
+}
