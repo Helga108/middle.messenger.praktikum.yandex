@@ -5,10 +5,10 @@
 @import "../components/LabeledInput/labeledInput.css";
 @import "../components/ProfileInfo/profileInfo.css";
 @import "../components/Error/error.css";
-@import "../components/SettingsForm/settingsForm.css";
+@import "../components/SettingsFormInput/settingsFormInput.css";
 @import "../modules/Login/login.css";
 @import "../modules/Signup/signup.css";
-@import "../components/InputError/inputError.css";
+@import "../components/ErrorText/errorText.css";
 @import "../modules/ChatList/chatList.css";
 @import "../components/ChatBlock/chatBlock.css";
 @import "../components/ChatThread/chatThread.css";

@@ -10,7 +10,7 @@ interface ChatListProps {
   title: string;
 }
 
-export default class ChatList extends Block {
+export default class ChatList extends Block<ChatListProps> {
   selectedChatId: number | null;
 
   constructor(props: ChatListProps) {
@@ -41,8 +41,6 @@ export default class ChatList extends Block {
   getUserIdFromData() {
     if (this.selectedChatId) {
       return (chatsData as any).chats[this.selectedChatId].userId;
-    } else {
-      return null;
     }
   }
 
@@ -51,11 +49,7 @@ export default class ChatList extends Block {
       const msgs = (chatsData as any).chats[this.selectedChatId].messages;
       const userId = this.getUserIdFromData();
       const alteredMessages = msgs.map((msg: any) => {
-        if (msg.authorId === userId) {
-          msg.my = true;
-        } else {
-          msg.my = false;
-        }
+        msg.my = msg.authorId === userId;
         return msg;
       });
 
@@ -68,12 +62,12 @@ export default class ChatList extends Block {
   setSelectedChatId() {
     console.log("setting chat id");
     this.selectedChatId = 41231312;
-    (this.children.chatThread as Block).setProps({
+    this.children.chatThread.setProps({
       selectedChatId: 41231312,
       messages: this.getMessagesFromData(),
       userId: this.getUserIdFromData(),
     });
-    (this.children.chatBlock as Block).setProps({
+    this.children.chatBlock.setProps({
       selected: true,
       wrapperClassName: "chat-block-wrapper-selected",
     });

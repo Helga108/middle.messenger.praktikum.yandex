@@ -1,6 +1,6 @@
 import Block from "../../utils/Block";
 import template from "./labeledInput.hbs";
-import InputError from "../InputError/inputError";
+import ErrorText from "../ErrorText/errorText";
 
 interface LabeledInputProps {
   name: string;
@@ -13,7 +13,7 @@ interface LabeledInputProps {
   validationPattern?: string;
 }
 
-export default class LabeledInput extends Block {
+export default class LabeledInput extends Block<LabeledInputProps> {
   value: string = "";
 
   constructor(props: LabeledInputProps) {
@@ -28,27 +28,23 @@ export default class LabeledInput extends Block {
   }
 
   init() {
-    this.children.errorMessage = new InputError({
+    this.children.errorMessage = new ErrorText({
       errorText: this.props.errorText,
       error: this.props.error,
       errorVisibilityClass: "error-hidden",
     });
   }
 
-  getInputValue() {
+  public getInputValue() {
     return this.value;
   }
 
-  getName() {
+  getName(): string {
     return this.props.name;
   }
 
-  getLabel() {
-    return this.props.label;
-  }
-
   onFocus() {
-    (this.children.errorMessage as Block).setProps({
+    this.children.errorMessage.setProps({
       errorVisibilityClass: "error-hidden",
     });
   }
@@ -56,21 +52,22 @@ export default class LabeledInput extends Block {
   onBlur() {
     const validatationResult = this.validate();
     if (!validatationResult) {
-      (this.children.errorMessage as Block).setProps({
+      this.children.errorMessage.setProps({
         errorVisibilityClass: "error-visible",
       });
     }
   }
 
-  validate() {
-    const reg = new RegExp(this.props.validationPattern);
+  public validate() {
+    const pattern = this.props.validationPattern || "";
+    const reg = new RegExp(pattern);
     const res = reg.test(this.value);
     return res;
   }
 
   onChange(e: Event) {
     this.value = (e.target as HTMLInputElement).value;
-    (this.children.errorMessage as Block).setProps({
+    this.children.errorMessage.setProps({
       errorVisibilityClass: "error-hidden",
     });
   }

@@ -15,7 +15,7 @@ interface UserSettingsProps {
   handle: string;
   avatar: string;
 }
-export default class UserSettings extends Block {
+export default class UserSettings extends Block<UserSettingsProps> {
   constructor(props: UserSettingsProps) {
     super(props);
   }

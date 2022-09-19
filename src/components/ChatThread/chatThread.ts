@@ -6,12 +6,10 @@ interface ChatThreadProps {
   selectedChatId: number | null;
   userId: number;
 }
-export default class ChatThread extends Block {
+export default class ChatThread extends Block<ChatThreadProps> {
   constructor(props: ChatThreadProps) {
     super(props);
   }
-
-  init() {}
 
   render() {
     return this.compile(template, this.props);

@@ -1,8 +1,8 @@
 import Block from "../../utils/Block";
-import template from "./settingsForm.hbs";
+import template from "./settingsFormInput.hbs";
 import LabeledInput from "../LabeledInput/labeledInput";
 
-interface SettingsFormProps {
+interface SettingsFormInputProps {
   icon: string;
   label: string;
   value: string;
@@ -10,12 +10,12 @@ interface SettingsFormProps {
   type: string;
   validationPattern: string;
   errorText: string;
-  name?: string;
+  name: string;
   errorVisibilityClass?: string;
 }
 
-export default class SettingsForm extends Block {
-  constructor(props: SettingsFormProps) {
+export default class SettingsFormInput extends Block<SettingsFormInputProps> {
+  constructor(props: SettingsFormInputProps) {
     super(props);
   }
 
@@ -34,8 +34,8 @@ export default class SettingsForm extends Block {
     return (this.children.input as LabeledInput).getInputValue();
   }
 
-  getLabel(): string {
-    return this.props.label;
+  getName(): string {
+    return this.props.name;
   }
 
   validate(): boolean {

@@ -1,11 +1,11 @@
-import Block from '../../utils/Block';
-import template from './home.hbs';
+import Block from "../../utils/Block";
+import template from "./home.hbs";
 
 interface HomePageProps {
   title: string;
   views: { name: string; link: string }[];
 }
-export default class HomePage extends Block {
+export default class HomePage extends Block<HomePageProps> {
   constructor(props: HomePageProps) {
     super(props);
   }

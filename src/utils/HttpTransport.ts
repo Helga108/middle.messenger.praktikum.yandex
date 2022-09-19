@@ -1,3 +1,5 @@
+import { queryStringify } from "./queryStringify";
+
 const METHODS = {
   GET: "GET",
   PUT: "PUT",
@@ -12,15 +14,12 @@ interface Options {
   headers?: object | object[];
 }
 
-function queryStringify(data: object): string {
-  const stingifiedData = Object.keys(data).reduce(
-    (acc: string, el: string) => acc.concat(`${el}=${(data as any)[el]}&`),
-    "?"
-  );
-  return stingifiedData.substring(0, stingifiedData.length - 1);
-}
 export default class HTTPTransport {
   get = (url: string, options: Options) => {
+    const { data } = options;
+    if (data) {
+      url = url + queryStringify(data);
+    }
     return this.request(
       url,
       { ...options, method: METHODS.GET },
@@ -67,9 +66,7 @@ export default class HTTPTransport {
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      if (method === METHODS.GET && data) {
-        url = url + queryStringify(data);
-      }
+
       xhr.open(method, url);
 
       xhr.onload = function () {

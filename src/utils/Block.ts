@@ -1,7 +1,8 @@
 import { nanoid } from "nanoid";
 import { EventBus } from "./EventBus";
 
-class Block {
+type TProps = Record<string, any>;
+class Block<Props extends {}> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -11,9 +12,9 @@ class Block {
 
   public id = nanoid(6);
 
-  protected props: any;
+  protected props: TProps;
 
-  public children: Record<string, Block | Block[]>;
+  public children: Record<string, Block<any>>;
 
   private eventBus: () => EventBus;
 
@@ -25,7 +26,7 @@ class Block {
    *
    * @returns {void}
    */
-  constructor(propsWithChildren: any = {}) {
+  constructor(propsWithChildren: Props) {
     const eventBus = new EventBus();
 
     const { props, children } = this._getChildrenAndProps(propsWithChildren);
@@ -40,9 +41,9 @@ class Block {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _getChildrenAndProps(childrenAndProps: any) {
+  private _getChildrenAndProps(childrenAndProps: any) {
     const props: Record<string, any> = {};
-    const children: Record<string, Block | Block[]> = {};
+    const children: Record<string, Block<any>> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
       if (value instanceof Block) {
@@ -55,17 +56,15 @@ class Block {
     return { props, children };
   }
 
-  _addEvents() {
-    const { events = {} } = this.props as {
-      events: Record<string, () => void>;
-    };
+  private _addEvents() {
+    const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
       this._element?.addEventListener(eventName, events[eventName]);
     });
   }
 
-  _registerEvents(eventBus: EventBus) {
+  private _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -80,11 +79,11 @@ class Block {
 
   protected init() {}
 
-  _componentDidMount() {
+  private _componentDidMount() {
     this.componentDidMount();
   }
 
-  componentDidMount() {}
+  public componentDidMount() {}
 
   public dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
@@ -141,7 +140,7 @@ class Block {
       if (Array.isArray(component)) {
         contextAndStubs[name] = component.map(
           (childComponent) =>
-            `<div data-id="id-${(childComponent as Block).id}"></div>`
+            `<div data-id="id-${(childComponent as Block<any>).id}"></div>`
         );
         return;
       }
@@ -179,25 +178,22 @@ class Block {
     return new DocumentFragment();
   }
 
-  getContent() {
+  public getContent() {
     return this.element;
   }
 
-  _makePropsProxy(props: any) {
-    // Ещё один способ передачи this, но он больше не применяется с приходом ES6+
-    const self = this;
-
+  private _makePropsProxy(props: TProps) {
     return new Proxy(props, {
-      get(target, prop) {
+      get: (target: TProps, prop: string) => {
         const value = target[prop];
         return typeof value === "function" ? value.bind(target) : value;
       },
-      set(target, prop, value) {
+      set: (target: TProps, prop: string, value: unknown) => {
         const oldTarget = { ...target };
 
         target[prop] = value;
 
-        self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
         return true;
       },
       deleteProperty() {
@@ -206,11 +202,11 @@ class Block {
     });
   }
 
-  show() {
+  public show() {
     this.getContent()!.style.display = "block";
   }
 
-  hide() {
+  public hide() {
     this.getContent()!.style.display = "none";
   }
 }

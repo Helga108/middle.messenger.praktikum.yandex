@@ -9,7 +9,7 @@ interface ErrorsPageProps {
   backLinkText: string;
 }
 
-export default class ErrorsPage extends Block {
+export default class ErrorsPage extends Block<ErrorsPageProps> {
   constructor(props: ErrorsPageProps) {
     super(props);
   }

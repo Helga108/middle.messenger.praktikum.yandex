@@ -1,21 +1,22 @@
 import Block from "../../utils/Block";
 import template from "./changePassword.hbs";
 import Button from "../../components/Button/button";
-import settingsForm from "../../components/SettingsForm/settingsForm";
+import settingsFormInput from "../../components/SettingsFormInput/settingsFormInput";
 import lockIcon from "../../../static/icons/lock.svg";
-import { validationPatternsLib as validation } from "../../utils/ValidationPatternsLib";
-import SettingsForm from "../../components/SettingsForm/settingsForm";
+import { VALIDATION_PATTERN_LIB as validation } from "../../utils/ValidationPatternsLib";
+import SettingsFormInput from "../../components/SettingsFormInput/settingsFormInput";
+import { submitForm } from "../../utils/SubmitForm";
 
 interface ChangePasswordProps {
   title: string;
 }
-export default class ChangePassword extends Block {
+export default class ChangePassword extends Block<ChangePasswordProps> {
   constructor(props: ChangePasswordProps) {
     super(props);
   }
 
   init() {
-    this.children.inputPassword = new settingsForm({
+    this.children.inputPassword = new settingsFormInput({
       icon: lockIcon,
       label: "Old password",
       value: "",
@@ -24,7 +25,7 @@ export default class ChangePassword extends Block {
       errorText: "Wrong password",
       name: "old-password",
     });
-    this.children.inputRepeatPassword = new settingsForm({
+    this.children.inputRepeatPassword = new settingsFormInput({
       name: "new-password",
       icon: lockIcon,
       label: "New password",
@@ -37,7 +38,7 @@ export default class ChangePassword extends Block {
     this.children.buttonSave = new Button({
       label: "Save changes",
       events: {
-        click: (e: Event) => this.submitChanges(e),
+        click: (e: Event) => this.submitChanges(e, this.children),
       },
     });
     this.children.buttonCancel = new Button({
@@ -45,27 +46,8 @@ export default class ChangePassword extends Block {
     });
   }
 
-  submitChanges(e: Event) {
-    e.preventDefault();
-
-    const formResult: any = {};
-
-    Object.keys(this.children).forEach((child) => {
-      if (this.children[child] instanceof SettingsForm) {
-        (this.children[child] as SettingsForm).validate();
-      }
-    });
-
-    Object.keys(this.children).forEach((child) => {
-      if (this.children[child] instanceof SettingsForm) {
-        formResult[(this.children[child] as SettingsForm).getLabel()] = (
-          this.children[child] as SettingsForm
-        ).getInputValue();
-      }
-    });
-
-    console.log(formResult);
-  }
+  submitChanges = (e: Event, children: any) =>
+    submitForm(e, children, SettingsFormInput);
 
   render() {
     return this.compile(template, this.props);

@@ -2,12 +2,13 @@ import Block from "../../utils/Block";
 import template from "./signup.hbs";
 import Button from "../../components/Button/button";
 import LabeledInput from "../../components/LabeledInput/labeledInput";
-import { validationPatternsLib } from "../../utils/ValidationPatternsLib";
+import { VALIDATION_PATTERN_LIB } from "../../utils/ValidationPatternsLib";
+import { submitForm } from "../../utils/SubmitForm";
 
 interface SignupProps {
   title: string;
 }
-export default class Signup extends Block {
+export default class Signup extends Block<SignupProps> {
   constructor(props: SignupProps) {
     super(props);
   }
@@ -22,7 +23,7 @@ export default class Signup extends Block {
       },
       error: false,
       errorText: "Wrong email",
-      validationPattern: validationPatternsLib.email,
+      validationPattern: VALIDATION_PATTERN_LIB.email,
       errorVisibilityClass: "",
     });
     this.children.inputLogin = new LabeledInput({
@@ -34,7 +35,7 @@ export default class Signup extends Block {
       },
       error: false,
       errorText: "Wrong login",
-      validationPattern: validationPatternsLib.login,
+      validationPattern: VALIDATION_PATTERN_LIB.login,
       errorVisibilityClass: "",
     });
     this.children.inputName = new LabeledInput({
@@ -46,7 +47,7 @@ export default class Signup extends Block {
       },
       error: false,
       errorText: "Wrong name",
-      validationPattern: validationPatternsLib.username,
+      validationPattern: VALIDATION_PATTERN_LIB.username,
       errorVisibilityClass: "",
     });
     this.children.inputLastName = new LabeledInput({
@@ -58,7 +59,7 @@ export default class Signup extends Block {
       },
       error: false,
       errorText: "Wrong last name",
-      validationPattern: validationPatternsLib.username,
+      validationPattern: VALIDATION_PATTERN_LIB.username,
       errorVisibilityClass: "",
     });
     this.children.inputPhone = new LabeledInput({
@@ -70,7 +71,7 @@ export default class Signup extends Block {
       },
       error: false,
       errorText: "Wrong phone",
-      validationPattern: validationPatternsLib.phone,
+      validationPattern: VALIDATION_PATTERN_LIB.phone,
       errorVisibilityClass: "",
     });
     this.children.inputPassword = new LabeledInput({
@@ -82,7 +83,7 @@ export default class Signup extends Block {
       },
       error: false,
       errorText: "Wrong password",
-      validationPattern: validationPatternsLib.password,
+      validationPattern: VALIDATION_PATTERN_LIB.password,
       errorVisibilityClass: "",
     });
     this.children.inputRepeatPassword = new LabeledInput({
@@ -94,13 +95,13 @@ export default class Signup extends Block {
       },
       error: false,
       errorText: "Wrong password",
-      validationPattern: validationPatternsLib.password,
+      validationPattern: VALIDATION_PATTERN_LIB.password,
       errorVisibilityClass: "",
     });
     this.children.button = new Button({
       label: "Create account",
       events: {
-        click: (e: Event) => this.submitLiginForm(e),
+        click: (e: Event) => this.submitSignupForm(e, this.children),
       },
     });
   }
@@ -109,25 +110,6 @@ export default class Signup extends Block {
     return this.compile(template, this.props);
   }
 
-  submitLiginForm(e: Event) {
-    e.preventDefault();
-
-    const formResult: any = {};
-
-    Object.keys(this.children).forEach((child) => {
-      if (this.children[child] instanceof LabeledInput) {
-        (this.children[child] as LabeledInput).validate();
-      }
-    });
-
-    Object.keys(this.children).forEach((child) => {
-      if (this.children[child] instanceof LabeledInput) {
-        formResult[(this.children[child] as LabeledInput).getName()] = (
-          this.children[child] as LabeledInput
-        ).getInputValue();
-      }
-    });
-
-    console.log(formResult);
-  }
+  submitSignupForm = (e: Event, children: any) =>
+    submitForm(e, children, LabeledInput);
 }

@@ -7,7 +7,7 @@ interface ProfileInfoProps {
   value: string;
 }
 
-export default class ProfileInfo extends Block {
+export default class ProfileInfo extends Block<ProfileInfoProps> {
   constructor(props: ProfileInfoProps) {
     super(props);
   }
