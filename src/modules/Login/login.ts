@@ -3,13 +3,11 @@ import template from "./login.hbs";
 import Button from "../../components/Button/button";
 import LabeledInput from "../../components/LabeledInput/labeledInput";
 import { VALIDATION_PATTERN_LIB } from "../../utils/ValidationPatternsLib";
-import { submitForm } from "../../utils/SubmitForm";
+import { formData } from "../../utils/formData";
+import AuthController from "../../controllers/AuthController";
 
-interface LoginProps {
-  title: string;
-}
-export default class Login extends Block<LoginProps> {
-  constructor(props: LoginProps) {
+export default class Login extends Block<any> {
+  constructor(props: any) {
     super(props);
   }
 
@@ -50,6 +48,8 @@ export default class Login extends Block<LoginProps> {
     return this.compile(template, this.props);
   }
 
-  submitLoginForm = (e: Event, children: any) =>
-    submitForm(e, children, LabeledInput);
+  submitLoginForm = (e: Event, children: any) => {
+    const data = formData(e, children, LabeledInput);
+    AuthController.signin(data);
+  };
 }

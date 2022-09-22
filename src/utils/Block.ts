@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { EventBus } from "./EventBus";
 
-type TProps = Record<string, any>;
+export type TProps = Record<string, any>;
 class Block<Props extends {}> {
   static EVENTS = {
     INIT: "init",

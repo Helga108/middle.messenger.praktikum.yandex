@@ -5,12 +5,15 @@ import ChatBlock from "../../components/ChatBlock/chatBlock";
 
 import { chatsData } from "../../mock/chatsData";
 import ChatThread from "../../components/ChatThread/chatThread";
+import { withStore } from "../../utils/Store";
+import Button from "../../components/Button/button";
+import AuthController from "../../controllers/AuthController";
 
 interface ChatListProps {
   title: string;
 }
 
-export default class ChatList extends Block<ChatListProps> {
+export default class ChatListBase extends Block<ChatListProps> {
   selectedChatId: number | null;
 
   constructor(props: ChatListProps) {
@@ -19,6 +22,7 @@ export default class ChatList extends Block<ChatListProps> {
   }
 
   init() {
+    console.log(this.props.state);
     this.children.chatBlock = new ChatBlock({
       name: "AA",
       avatarImg: "img",
@@ -35,6 +39,14 @@ export default class ChatList extends Block<ChatListProps> {
       messages: this.getMessagesFromData(),
       selectedChatId: this.selectedChatId,
       userId: this.getUserIdFromData(),
+    });
+    this.children.button = new Button({
+      label: "logout",
+      events: {
+        click: () => {
+          AuthController.logout();
+        },
+      },
     });
   }
 
@@ -77,3 +89,7 @@ export default class ChatList extends Block<ChatListProps> {
     return this.compile(template, this.props);
   }
 }
+
+const withUser = withStore((state) => ({ ...state }));
+
+export const ChatList = withUser(ChatListBase as typeof Block);

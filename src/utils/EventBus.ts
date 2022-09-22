@@ -16,13 +16,13 @@ export class EventBus {
     }
 
     this.listeners[event] = this.listeners[event].filter(
-      (listener) => listener !== callback,
+      (listener) => listener !== callback
     );
   }
 
   emit(event: string, ...args: any[]) {
     if (!this.listeners[event]) {
-      throw new Error(`No event: ${event}`);
+      return;
     }
 
     this.listeners[event].forEach((listener) => {
