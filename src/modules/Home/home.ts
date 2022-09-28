@@ -3,16 +3,16 @@ import template from "./home.hbs";
 
 const views = [
   { name: "Login", link: "/login" },
-  { name: "Sign up", link: "/signup" },
+  { name: "Sign up", link: "/sign-up" },
   { name: "Chat list", link: "/messenger" },
-  { name: "User settings", link: "/usersettings" },
+  { name: "User settings", link: "/settings" },
   {
     name: "Edit settings",
     link: "/editusersettings",
   },
   {
     name: "Change password",
-    link: "/changepassword",
+    link: "/change-password",
   },
   { name: "404", link: "/404" },
   { name: "500", link: "/500" },

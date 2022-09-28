@@ -5,6 +5,7 @@ import LabeledInput from "../../components/LabeledInput/labeledInput";
 import { VALIDATION_PATTERN_LIB } from "../../utils/ValidationPatternsLib";
 import { formData } from "../../utils/formData";
 import AuthController from "../../controllers/AuthController";
+import ChatsController from "../../controllers/ChatsController";
 
 export default class Login extends Block<any> {
   constructor(props: any) {
@@ -23,6 +24,7 @@ export default class Login extends Block<any> {
       errorText: "Wrong login",
       validationPattern: VALIDATION_PATTERN_LIB.login,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.inputPassword = new LabeledInput({
       name: "password",
@@ -35,6 +37,7 @@ export default class Login extends Block<any> {
       errorText: "Wrong password",
       validationPattern: VALIDATION_PATTERN_LIB.password,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.button = new Button({
       label: "Log in",

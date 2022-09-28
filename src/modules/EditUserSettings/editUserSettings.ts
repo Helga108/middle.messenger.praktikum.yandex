@@ -8,40 +8,43 @@ import loginIcon from "../../../static/icons/login.svg";
 import mailIcon from "../../../static/icons/mail.svg";
 import phoneIcon from "../../../static/icons/phone.svg";
 import { VALIDATION_PATTERN_LIB as validation } from "../../utils/ValidationPatternsLib";
-import SettingsFormInput from "../../components/SettingsFormInput/settingsFormInput";
+import { formData } from "../../utils/formData";
+import { withStore } from "../../utils/Store";
+import { UserData } from "../../api/UserAPI";
+import UserController from "../../controllers/UserController";
 
 interface EditUserSettingsProps {
   title: string;
 }
-export default class EditUserSettings extends Block<EditUserSettingsProps> {
+class EditUserSettingsBase extends Block<EditUserSettingsProps> {
   constructor(props: EditUserSettingsProps) {
     super(props);
   }
 
   init() {
     this.children.inputName = new settingsFormInput({
-      name: "name",
+      name: "first_name",
       icon: nameIcon,
       label: "Name",
-      value: "Packman",
+      value: this.props.first_name,
       type: "text",
       validationPattern: validation.username,
       errorText: "Wrong name",
     });
     this.children.inputLastName = new settingsFormInput({
-      name: "lastname",
+      name: "second_name",
       icon: nameIcon,
       label: "Last name",
-      value: "Packmanovich",
+      value: this.props.second_name,
       type: "text",
       validationPattern: validation.username,
       errorText: "Wrong last name",
     });
     this.children.inputHandle = new settingsFormInput({
-      name: "handle",
+      name: "display_name",
       icon: atIcon,
-      label: "Handle",
-      value: "pkmn",
+      label: "Full name",
+      value: this.props.display_name,
       type: "text",
       validationPattern: validation.login,
       errorText: "Wrong handle",
@@ -49,17 +52,17 @@ export default class EditUserSettings extends Block<EditUserSettingsProps> {
     this.children.inputLogin = new settingsFormInput({
       name: "login",
       icon: loginIcon,
-      label: "pkmnLogin",
-      value: "pkmn",
+      label: "Login",
+      value: this.props.login,
       type: "text",
       validationPattern: validation.login,
       errorText: "Wrong login",
     });
     this.children.inputEmail = new settingsFormInput({
-      name: "mail",
+      name: "email",
       icon: mailIcon,
       label: "Email",
-      value: "pkmn@prtnml.com",
+      value: this.props.email,
       type: "text",
       validationPattern: validation.email,
       errorText: "Wrong email",
@@ -68,15 +71,15 @@ export default class EditUserSettings extends Block<EditUserSettingsProps> {
       name: "phone",
       icon: phoneIcon,
       label: "Phone",
-      value: "pkmn@prtnml.com",
+      value: this.props.phone,
       type: "text",
       validationPattern: validation.phone,
-      errorText: "Wrong phone",
+      errorText: "Enter a valid phone number",
     });
     this.children.buttonSave = new Button({
       label: "Save changes",
       events: {
-        click: (e: Event) => this.submitChanges(e),
+        click: (e: Event) => this.submitChanges(e, this.children),
       },
     });
     this.children.buttonCancel = new Button({
@@ -84,24 +87,16 @@ export default class EditUserSettings extends Block<EditUserSettingsProps> {
     });
   }
 
-  submitChanges(e: Event) {
-    e.preventDefault();
-
-    const formResult: any = {};
-
-    Object.keys(this.children).forEach((child) => {
-      if (this.children[child] instanceof SettingsFormInput) {
-        (this.children[child] as SettingsFormInput).validate();
-        formResult[(this.children[child] as SettingsFormInput).getName()] = (
-          this.children[child] as SettingsFormInput
-        ).getInputValue();
-      }
-    });
-
-    console.log(formResult);
+  async submitChanges(e: Event, children: any) {
+    const data: UserData = formData(e, children, settingsFormInput);
+    console.log(data);
+    UserController.updateProfile(data);
   }
 
   render() {
+    console.log(this.props);
     return this.compile(template, this.props);
   }
 }
+const withUser = withStore((state) => ({ ...state.user }));
+export const EditUserSettings = withUser(EditUserSettingsBase as typeof Block);

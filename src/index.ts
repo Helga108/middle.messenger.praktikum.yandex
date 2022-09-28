@@ -1,11 +1,11 @@
-import ChatList from "./modules/ChatList/chatList";
+import { ChatList } from "./modules/ChatList/chatList";
 import HomePage from "./modules/Home/home";
 import Login from "./modules/Login/login";
 import Signup from "./modules/Signup/signup";
 //import ErrorsPage from "./modules/Errors/errors";
-import UserSettings from "./modules/UserSettings/userSettings";
+import { UserSettings } from "./modules/UserSettings/userSettings";
 //import avatar from "../static/images/generic-avatar.png";
-import EditUserSettings from "./modules/EditUserSettings/editUserSettings";
+import { EditUserSettings } from "./modules/EditUserSettings/editUserSettings";
 import ChangePassword from "./modules/ChangePassword/changePassword";
 import Router from "./utils/Router";
 import Block from "./utils/Block";

@@ -11,11 +11,10 @@ interface LabeledInputProps {
   errorText?: string;
   errorVisibilityClass?: string;
   validationPattern?: string;
+  value: string;
 }
 
 export default class LabeledInput extends Block<LabeledInputProps> {
-  value: string = "";
-
   constructor(props: LabeledInputProps) {
     super(props);
     this.props.events = {
@@ -36,7 +35,7 @@ export default class LabeledInput extends Block<LabeledInputProps> {
   }
 
   public getInputValue() {
-    return this.value;
+    return this.props.value;
   }
 
   getName(): string {
@@ -61,12 +60,13 @@ export default class LabeledInput extends Block<LabeledInputProps> {
   public validate() {
     const pattern = this.props.validationPattern || "";
     const reg = new RegExp(pattern);
-    const res = reg.test(this.value);
+    const res = reg.test(this.props.value);
     return res;
   }
 
   onChange(e: Event) {
-    this.value = (e.target as HTMLInputElement).value;
+    this.setProps({ value: (e.target as HTMLInputElement).value });
+
     this.children.errorMessage.setProps({
       errorVisibilityClass: "error-hidden",
     });

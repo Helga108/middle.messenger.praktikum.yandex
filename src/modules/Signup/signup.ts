@@ -5,6 +5,7 @@ import LabeledInput from "../../components/LabeledInput/labeledInput";
 import { VALIDATION_PATTERN_LIB } from "../../utils/ValidationPatternsLib";
 import { formData } from "../../utils/formData";
 import AuthController from "../../controllers/AuthController";
+import ChatsController from "../../controllers/ChatsController";
 
 export default class Signup extends Block<any> {
   constructor(props: any) {
@@ -23,6 +24,7 @@ export default class Signup extends Block<any> {
       errorText: "Wrong email",
       validationPattern: VALIDATION_PATTERN_LIB.email,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.inputLogin = new LabeledInput({
       name: "login",
@@ -35,6 +37,7 @@ export default class Signup extends Block<any> {
       errorText: "Wrong login",
       validationPattern: VALIDATION_PATTERN_LIB.login,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.inputName = new LabeledInput({
       name: "first_name",
@@ -47,6 +50,7 @@ export default class Signup extends Block<any> {
       errorText: "Wrong name",
       validationPattern: VALIDATION_PATTERN_LIB.username,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.inputLastName = new LabeledInput({
       name: "second_name",
@@ -59,6 +63,7 @@ export default class Signup extends Block<any> {
       errorText: "Wrong last name",
       validationPattern: VALIDATION_PATTERN_LIB.username,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.inputPhone = new LabeledInput({
       name: "phone",
@@ -71,6 +76,7 @@ export default class Signup extends Block<any> {
       errorText: "Wrong phone",
       validationPattern: VALIDATION_PATTERN_LIB.phone,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.inputPassword = new LabeledInput({
       name: "password",
@@ -83,6 +89,7 @@ export default class Signup extends Block<any> {
       errorText: "Wrong password",
       validationPattern: VALIDATION_PATTERN_LIB.password,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.inputRepeatPassword = new LabeledInput({
       name: "repeat-password",
@@ -95,6 +102,7 @@ export default class Signup extends Block<any> {
       errorText: "Wrong password",
       validationPattern: VALIDATION_PATTERN_LIB.password,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.button = new Button({
       label: "Create account",
@@ -111,5 +119,6 @@ export default class Signup extends Block<any> {
   submitSignupForm = (e: Event, children: any) => {
     const data = formData(e, children, LabeledInput);
     AuthController.signup(data);
+    ChatsController.fetchCats();
   };
 }

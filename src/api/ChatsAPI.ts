@@ -1,10 +1,5 @@
 import BaseAPI from "./BaseAPI";
 
-// export interface SigninData {
-//   login: string;
-//   password: string;
-// }
-
 export interface ChatsData {
   first_name: string;
   second_name: string;
@@ -14,41 +9,30 @@ export interface ChatsData {
   phone: string;
 }
 
-// export interface User {
-//   id: number;
-//   first_name: string;
-//   second_name: string;
-//   login: string;
-//   email: string;
-//   password: string;
-//   phone: string;
-//   avatar: string;
-// }
-
 export class ChatsAPI extends BaseAPI {
   constructor() {
-    super("/");
+    super("/chats");
   }
 
   read() {
-    return this.http.get("/chats");
+    return this.http.get("");
   }
 
-  // signin(data: SigninData) {
-  //   return this.http.post("/signin", data);
-  // }
+  createChat(data: object) {
+    return this.http.post("", data);
+  }
 
-  // signup(data: SignupData) {
-  //   return this.http.post("/signup", data);
-  // }
+  addUsersToChat(data: any) {
+    return this.http.put("/users", data);
+  }
 
-  // read(): Promise<User> {
-  //   return this.http.get("/user");
-  // }
+  deleteUsersFromChat(data: any) {
+    return this.http.delete("/users", data);
+  }
 
-  // logout() {
-  //   return this.http.post("/logout");
-  // }
+  deleteChat(id: string) {
+    return this.http.delete("", { chatId: id });
+  }
 
   create = undefined;
 

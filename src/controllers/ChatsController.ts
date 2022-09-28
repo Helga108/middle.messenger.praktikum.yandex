@@ -9,6 +9,44 @@ export class ChatsController {
     this.api = API;
   }
 
+  async fetchChats() {
+    const chats = await this.api.read();
+    store.set("chats", chats);
+  }
+
+  async createChat(data: object) {
+    await this.api.createChat(data);
+    this.fetchChats();
+  }
+
+  async deleteChat(id: string) {
+    await this.api.deleteChat(id);
+    this.fetchChats();
+  }
+
+  setSelectedChatId(id: string) {
+    store.set("selectedChatId", id);
+  }
+
+  async addUsersToChat(userID: string, chatId: string) {
+    const data = {
+      users: [userID],
+      chatId: chatId,
+    };
+    await this.api.addUsersToChat(data);
+    store.set("userIdToAdd", "");
+    this.fetchChats();
+  }
+
+  async removeUserFromChat(userId: string, chatId: string) {
+    const data = {
+      users: [userID],
+      chatId: chatId,
+    };
+    await this.api.deleteUsersFromChat(data);
+    store.set("userIdToDelete", "");
+    this.fetchChats();
+  }
   //   async signin(data: SigninData) {
   //     try {
   //       await this.api.signin(data);

@@ -16,6 +16,7 @@
 @import "../modules/UserSettings/userSettings.css";
 @import "../modules/EditUserSettings/editUserSettings.css";
 @import "../modules/ChangePassword/changePassword.css";
+@import "../components/Modal/modal.css";
 
 body {
   min-width: 320px;

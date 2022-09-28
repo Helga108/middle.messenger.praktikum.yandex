@@ -27,6 +27,7 @@ export default class SettingsFormInput extends Block<SettingsFormInputProps> {
       errorVisibilityClass: this.props.errorVisibilityClass,
       validationPattern: this.props.validationPattern,
       label: "",
+      value: this.props.value,
     });
   }
 

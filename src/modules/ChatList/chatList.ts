@@ -1,19 +1,20 @@
 import Block from "../../utils/Block";
 import template from "./chatList.hbs";
 
-import ChatBlock from "../../components/ChatBlock/chatBlock";
+import { ChatsBlock } from "../../components/ChatsBlock/chatsBlock";
 
 import { chatsData } from "../../mock/chatsData";
 import ChatThread from "../../components/ChatThread/chatThread";
-import { withStore } from "../../utils/Store";
+import store, { withStore } from "../../utils/Store";
 import Button from "../../components/Button/button";
 import AuthController from "../../controllers/AuthController";
+import ChatsController from "../../controllers/ChatsController";
 
 interface ChatListProps {
   title: string;
 }
 
-export default class ChatListBase extends Block<ChatListProps> {
+class ChatListBase extends Block<ChatListProps> {
   selectedChatId: number | null;
 
   constructor(props: ChatListProps) {
@@ -21,23 +22,15 @@ export default class ChatListBase extends Block<ChatListProps> {
     this.selectedChatId = null;
   }
 
+  public componentDidMount(): void {}
+
   init() {
-    console.log(this.props.state);
-    this.children.chatBlock = new ChatBlock({
-      name: "AA",
-      avatarImg: "img",
-      lastMessageAbstract: "Last message....",
-      lastMessageTime: "12:30",
-      newMessagesCount: 1,
-      events: {
-        click: () => this.setSelectedChatId(),
-      },
-      selected: false,
-      wrapperClassName: "",
-    });
+    ChatsController.fetchChats();
+    this.children.chatsBlocks = new ChatsBlock({});
+
     this.children.chatThread = new ChatThread({
       messages: this.getMessagesFromData(),
-      selectedChatId: this.selectedChatId,
+      selectedChatId: this.props.selectedChatId,
       userId: this.getUserIdFromData(),
     });
     this.children.button = new Button({
@@ -45,6 +38,14 @@ export default class ChatListBase extends Block<ChatListProps> {
       events: {
         click: () => {
           AuthController.logout();
+        },
+      },
+    });
+    this.children.createChat = new Button({
+      label: "+",
+      events: {
+        click: () => {
+          ChatsController.createChat({ title: "new chat" });
         },
       },
     });
@@ -86,10 +87,11 @@ export default class ChatListBase extends Block<ChatListProps> {
   }
 
   render() {
+    console.log("chatsstate", this.props);
     return this.compile(template, this.props);
   }
 }
 
-const withUser = withStore((state) => ({ ...state }));
+const withChats = withStore((state) => ({ ...state }));
 
-export const ChatList = withUser(ChatListBase as typeof Block);
+export const ChatList = withChats(ChatListBase as typeof Block);
