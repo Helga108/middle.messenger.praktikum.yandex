@@ -34,6 +34,10 @@ export class ChatsAPI extends BaseAPI {
     return this.http.delete("", { chatId: id });
   }
 
+  getChatToken(id: number) {
+    return this.http.post(`/token/${id}`);
+  }
+
   create = undefined;
 
   update = undefined;

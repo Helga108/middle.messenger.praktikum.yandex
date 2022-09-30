@@ -4,11 +4,12 @@ import template from "./chatList.hbs";
 import { ChatsBlock } from "../../components/ChatsBlock/chatsBlock";
 
 import { chatsData } from "../../mock/chatsData";
-import ChatThread from "../../components/ChatThread/chatThread";
+import { ChatThread } from "../../components/ChatThread/chatThread";
 import store, { withStore } from "../../utils/Store";
 import Button from "../../components/Button/button";
 import AuthController from "../../controllers/AuthController";
 import ChatsController from "../../controllers/ChatsController";
+import MessageController from "../../controllers/MessageController";
 
 interface ChatListProps {
   title: string;
@@ -22,16 +23,25 @@ class ChatListBase extends Block<ChatListProps> {
     this.selectedChatId = null;
   }
 
-  public componentDidMount(): void {}
+  componentDidUpdate(oldProps, newProps) {
+    this.children.chatThread.setProps(newProps);
+    if (newProps.selectedChatId) {
+      this.children.chatThread = new ChatThread({
+        messages: this.getMessages(),
+        selectedChatId: newProps.selectedChatId,
+        userId: 233,
+      });
+    }
+    return true;
+  }
 
   init() {
     ChatsController.fetchChats();
     this.children.chatsBlocks = new ChatsBlock({});
-
     this.children.chatThread = new ChatThread({
-      messages: this.getMessagesFromData(),
+      messages: this.getMessages(),
       selectedChatId: this.props.selectedChatId,
-      userId: this.getUserIdFromData(),
+      userId: store.getState().userId,
     });
     this.children.button = new Button({
       label: "logout",
@@ -51,39 +61,15 @@ class ChatListBase extends Block<ChatListProps> {
     });
   }
 
-  getUserIdFromData() {
-    if (this.selectedChatId) {
-      return (chatsData as any).chats[this.selectedChatId].userId;
-    }
-  }
-
-  getMessagesFromData() {
-    if (this.selectedChatId) {
-      const msgs = (chatsData as any).chats[this.selectedChatId].messages;
-      const userId = this.getUserIdFromData();
-      const alteredMessages = msgs.map((msg: any) => {
-        msg.my = msg.authorId === userId;
-        return msg;
+  getMessages() {
+    if (store.getState().selectedChatId !== undefined) {
+      MessageController.connect({
+        userId: store.getState().user.id,
+        chatId: store.getState().selectedChatId,
+        token: store.getState().token,
       });
-
-      return alteredMessages;
-    } else {
-      return null;
+      // MessageController.getMessages({ offset: 0 });
     }
-  }
-
-  setSelectedChatId() {
-    console.log("setting chat id");
-    this.selectedChatId = 41231312;
-    this.children.chatThread.setProps({
-      selectedChatId: 41231312,
-      messages: this.getMessagesFromData(),
-      userId: this.getUserIdFromData(),
-    });
-    this.children.chatBlock.setProps({
-      selected: true,
-      wrapperClassName: "chat-block-wrapper-selected",
-    });
   }
 
   render() {

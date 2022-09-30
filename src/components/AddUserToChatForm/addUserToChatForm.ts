@@ -1,18 +1,20 @@
 import Block from "../../utils/Block";
 import Button from "../Button/button";
 import LabeledInput from "../LabeledInput/labeledInput";
-import template from "./removeUserFromChatForm.hbs";
+import template from "./addUserToChatForm.hbs";
 import ChatsController from "../../controllers/ChatsController";
 import { formData } from "../../utils/formData";
+import UserController from "../../controllers/UserController";
+import store from "../../utils/Store";
 
-interface RemoveUserFromChatFormProps {
+interface AddUserToChatFormProps {
   label: string;
   events?: {
     click?: (e: Event) => void;
   };
 }
-export default class RemoveUserFromChatForm extends Block<RemoveUserFromChatFormProps> {
-  constructor(props: RemoveUserFromChatFormProps) {
+export default class AddUserToChatForm extends Block<AddUserToChatFormProps> {
+  constructor(props: AddUserToChatFormProps) {
     super(props);
   }
 
@@ -24,18 +26,21 @@ export default class RemoveUserFromChatForm extends Block<RemoveUserFromChatForm
       type: "text",
     });
     this.children.button = new Button({
-      label: "Remove user",
+      label: "Add",
       events: {
         click: (e) => {
-          this.submitRemoveUserForm(e, this.children);
+          this.submitAddUserForm(e, this.children);
         },
       },
     });
   }
 
-  submitRemoveUserForm = (e: Event, children: any) => {
+  submitAddUserForm = (e: Event, children: any) => {
     const data = formData(e, children, LabeledInput);
-    ChatsController.removeUserFromChat(data);
+
+    ChatsController.addUsersToChat(data);
+
+    //ChatsController.addUsersToChat(userId, store.getState().selectedChatId);
   };
 
   render() {

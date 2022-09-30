@@ -44,7 +44,7 @@ export class UserAPI extends BaseAPI {
     return this.http.put("/password", passData);
   }
 
-  search(login: { login: string }): [] {
+  search(login: { login: string }) {
     return this.http.post("/search", login);
   }
 

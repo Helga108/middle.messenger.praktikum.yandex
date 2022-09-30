@@ -45,6 +45,7 @@ export class UserController {
         if (user.length > 0) {
           store.set("userIdToAdd", user[0].id);
           console.log(user[0].id);
+          return user[0].id;
         } else {
           console.log("user not found");
         }

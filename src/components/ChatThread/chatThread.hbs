@@ -1,5 +1,5 @@
 <div class="chat-thread-wrapper">
-  
+
     {{#if messages}}
     <div class="chat-thread-messages">
       {{#each messages}}
@@ -9,9 +9,7 @@
         <div class="others-message">{{this.content}}</div>
         {{/if}} 
       {{/each}}
-      <div class="chat-thread-input">
-        <input type="text" name="message"/>
-      </div>
+      {{{messageInput}}}
     {{else}}
       <div class="chat-thread-stub">Choose a chat to start messaging</div>
       </div>

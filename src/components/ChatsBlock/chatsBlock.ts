@@ -7,6 +7,8 @@ import store from "../../utils/Store";
 import ChatsController from "../../controllers/ChatsController";
 import Modal from "../Modal/modal";
 import AddUserToChatForm from "../AddUserToChat/addUserToChat";
+import RemoveUserFromChatForm from "../RemoveUserFromChatForm/removeUserFromChatForm";
+import MessageController from "../../controllers/MessageController";
 
 class ChatsBlockBase extends Block<any> {
   constructor(props) {
@@ -28,6 +30,8 @@ class ChatsBlockBase extends Block<any> {
           newMessagesCount: chat.unread_count,
           events: {
             click: () => {
+              store.set("messages", []);
+              MessageController.leave();
               ChatsController.setSelectedChatId(chat.id);
             },
           },
@@ -48,12 +52,13 @@ class ChatsBlockBase extends Block<any> {
           id: chat.id,
           name: chat.title,
           avatarImg: chat.avatar,
-          lastMessageAbstract: chat.last_message,
+          lastMessageAbstract:
+            chat.last_message !== null ? chat.last_message.content : "",
           lastMessageTime: chat.time,
           newMessagesCount: chat.unread_count,
           events: {
             click: () => {
-              ChatsController.setSelectedChatId(chat.id);
+              this.onChatSelection(chat);
             },
           },
           selected: false,
@@ -68,9 +73,23 @@ class ChatsBlockBase extends Block<any> {
         content: new AddUserToChatForm({}),
         showModal: false,
       });
+      this.children.removeModal = new Modal({
+        content: new RemoveUserFromChatForm({}),
+        showModal: false,
+      });
       this.children.chatsBlocks = chatsBlocks;
     }
     return true;
+  }
+
+  getMessages(token: string = store.getState().token) {}
+
+  onChatSelection(chat) {
+    ChatsController.setSelectedChatId(chat.id);
+    ChatsController.getChatToken(chat.id).then(({ token }) => {
+      store.set("token", token);
+      //this.getMessages(token);
+    });
   }
 
   render() {

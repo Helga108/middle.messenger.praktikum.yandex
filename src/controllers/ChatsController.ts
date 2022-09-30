@@ -1,6 +1,7 @@
 import API, { ChatsAPI } from "../api/ChatsAPI";
 import store from "../utils/Store";
 import router from "../utils/Router";
+import UserController from "../controllers/UserController";
 
 export class ChatsController {
   private readonly api: ChatsAPI;
@@ -12,6 +13,11 @@ export class ChatsController {
   async fetchChats() {
     const chats = await this.api.read();
     store.set("chats", chats);
+  }
+
+  async getChatToken(id: number) {
+    const token = await this.api.getChatToken(id);
+    return token;
   }
 
   async createChat(data: object) {
@@ -28,61 +34,21 @@ export class ChatsController {
     store.set("selectedChatId", id);
   }
 
-  async addUsersToChat(userID: string, chatId: string) {
-    const data = {
-      users: [userID],
-      chatId: chatId,
-    };
-    await this.api.addUsersToChat(data);
+  async addUsersToChat(data) {
+    const user = await UserController.findUserByLogin(data);
+    const userData = { users: [user], chatId: store.getState().selectedChatId };
+    await this.api.addUsersToChat(userData);
     store.set("userIdToAdd", "");
     this.fetchChats();
   }
 
-  async removeUserFromChat(userId: string, chatId: string) {
-    const data = {
-      users: [userID],
-      chatId: chatId,
-    };
-    await this.api.deleteUsersFromChat(data);
-    store.set("userIdToDelete", "");
+  async removeUserFromChat(data) {
+    const user = await UserController.findUserByLogin(data);
+    const userData = { users: [user], chatId: store.getState().selectedChatId };
+    await this.api.deleteUsersFromChat(userData);
+    store.set("userIdToAdd", "");
     this.fetchChats();
   }
-  //   async signin(data: SigninData) {
-  //     try {
-  //       await this.api.signin(data);
-
-  //       router.go("/messenger");
-  //     } catch (e: any) {
-  //       console.error(e);
-  //     }
-  //   }
-
-  //   async signup(data: SignupData) {
-  //     try {
-  //       await this.api.signup(data);
-
-  //       await this.fetchUser();
-
-  //       router.go("/messenger");
-  //     } catch (e: any) {
-  //       console.error(e.message);
-  //     }
-  //   }
-
-  //   async fetchUser() {
-  //     const user = await this.api.read();
-  //     store.set("user", user);
-  //   }
-
-  //   async logout() {
-  //     try {
-  //       await this.api.logout();
-
-  //       router.go("/");
-  //     } catch (e: any) {
-  //       console.error(e.message);
-  //     }
-  //   }
 }
 
 export default new ChatsController();

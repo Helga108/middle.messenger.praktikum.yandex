@@ -1,7 +1,7 @@
 import Block from "../../utils/Block";
-import RemoveUserToChatForm from "../RemoveUserFromChatForm/removeUserFromChatForm";
+import RemoveUserFromChatForm from "../RemoveUserFromChatForm/removeUserFromChatForm";
 import Button from "../Button/button";
-import LabeledInput from "../LabeledInput/labeledInput";
+
 import Modal from "../Modal/modal";
 import template from "./removeUserFromChat.hbs";
 
@@ -16,10 +16,10 @@ export default class RemoveUserFromChat extends Block<RemoveUserFromChatProps> {
     super(props);
   }
 
-  componentDidUpdate(oldProps, newProps) {
+  componentDidUpdate(oldProps: any, newProps: any) {
     console.log(newProps);
     this.children.modal = new Modal({
-      content: new LabeledInput({ label: "" }),
+      content: new RemoveUserFromChatForm({ label: "" }),
       showModal: this.props.showModal,
     });
     return true;
@@ -36,7 +36,7 @@ export default class RemoveUserFromChat extends Block<RemoveUserFromChatProps> {
       },
     });
     this.children.modal = new Modal({
-      content: new RemoveUserToChatForm({}),
+      content: new RemoveUserFromChatForm({}),
       showModal: this.props.showModal,
     });
   }
