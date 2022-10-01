@@ -4,8 +4,6 @@ import LabeledInput from "../LabeledInput/labeledInput";
 import template from "./addUserToChatForm.hbs";
 import ChatsController from "../../controllers/ChatsController";
 import { formData } from "../../utils/formData";
-import UserController from "../../controllers/UserController";
-import store from "../../utils/Store";
 
 interface AddUserToChatFormProps {
   label: string;

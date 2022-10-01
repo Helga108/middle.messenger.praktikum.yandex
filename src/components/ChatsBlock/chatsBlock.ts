@@ -44,9 +44,9 @@ class ChatsBlockBase extends Block<any> {
     this.children.chatsBlocks = chatsBlocks;
   }
 
-  protected componentDidUpdate(oldProps: object, newProps: object): boolean {
+  protected componentDidUpdate(oldProps: any, newProps: any): boolean {
     if (newProps.chats !== undefined) {
-      let chatsBlocks: typeof Block[] = [];
+      let chatsBlocks: any = [];
       newProps.chats.forEach((chat: any) => {
         const chatBlock = new ChatBlock({
           id: chat.id,
@@ -70,11 +70,11 @@ class ChatsBlockBase extends Block<any> {
         chatsBlocks.push(chatBlock);
       });
       this.children.addModal = new Modal({
-        content: new AddUserToChatForm({}),
+        content: new AddUserToChatForm({ label: "" }),
         showModal: false,
       });
       this.children.removeModal = new Modal({
-        content: new RemoveUserFromChatForm({}),
+        content: new RemoveUserFromChatForm({ label: "" }),
         showModal: false,
       });
       this.children.chatsBlocks = chatsBlocks;
@@ -82,13 +82,16 @@ class ChatsBlockBase extends Block<any> {
     return true;
   }
 
-  getMessages(token: string = store.getState().token) {}
+  async getMessages(token: string = store.getState().token) {
+    const id = store.getState().selectedChatId;
+    await MessageController.connect(id, token);
+  }
 
-  onChatSelection(chat) {
+  onChatSelection(chat: { id: number }) {
     ChatsController.setSelectedChatId(chat.id);
     ChatsController.getChatToken(chat.id).then(({ token }) => {
       store.set("token", token);
-      //this.getMessages(token);
+      this.getMessages(token);
     });
   }
 

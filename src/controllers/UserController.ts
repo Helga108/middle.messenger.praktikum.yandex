@@ -37,10 +37,10 @@ export class UserController {
 
   async findUserByLogin(data: { login: string }) {
     try {
-      const users: [] = await this.api.search(data);
+      const users: any = await this.api.search(data);
       if (users !== undefined && users.length > 0) {
-        const user = users.filter((user) => {
-          return user.login === data.login;
+        const user = users.filter((usr: { login: string }) => {
+          return usr.login === data.login;
         });
         if (user.length > 0) {
           store.set("userIdToAdd", user[0].id);

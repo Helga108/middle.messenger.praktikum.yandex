@@ -1,6 +1,5 @@
 import API, { ChatsAPI } from "../api/ChatsAPI";
 import store from "../utils/Store";
-import router from "../utils/Router";
 import UserController from "../controllers/UserController";
 
 export class ChatsController {
@@ -30,11 +29,11 @@ export class ChatsController {
     this.fetchChats();
   }
 
-  setSelectedChatId(id: string) {
+  setSelectedChatId(id: number) {
     store.set("selectedChatId", id);
   }
 
-  async addUsersToChat(data) {
+  async addUsersToChat(data: { login: string }) {
     const user = await UserController.findUserByLogin(data);
     const userData = { users: [user], chatId: store.getState().selectedChatId };
     await this.api.addUsersToChat(userData);
@@ -42,7 +41,7 @@ export class ChatsController {
     this.fetchChats();
   }
 
-  async removeUserFromChat(data) {
+  async removeUserFromChat(data: { login: string }) {
     const user = await UserController.findUserByLogin(data);
     const userData = { users: [user], chatId: store.getState().selectedChatId };
     await this.api.deleteUsersFromChat(userData);

@@ -1,7 +1,7 @@
 import Block from "../../utils/Block";
 import template from "./chatThread.hbs";
 import MessageInput from "../MessageInput/messageInput";
-import { withStore } from "../../utils/Store";
+import store, { withStore } from "../../utils/Store";
 
 interface ChatThreadProps {
   messages: {};
@@ -19,11 +19,25 @@ class ChatThreadBase extends Block<ChatThreadProps> {
     });
   }
 
+  protected componentDidUpdate(oldProps: any, newProps: any): boolean {
+    return true;
+  }
+
   render() {
-    return this.compile(template, this.props);
+    console.log("messages", [...(this.props.chatMessages || [])]);
+    return this.compile(template, {
+      ...this.props,
+      isMine: this.props.selectedChatId === this.props.selectedChat?.id,
+      selectedChatId: store.getState().selectedChatId,
+    });
   }
 }
 
-const withMessages = withStore((state) => ({ ...state }));
+const withMessages = withStore((state) => ({
+  selectedChat: (state.chats || []).find(
+    ({ id }) => id === state.selectedChatId
+  ),
+  chatMessages: state.messages?.[state.selectedChatId],
+}));
 
 export const ChatThread = withMessages(ChatThreadBase as typeof Block);

@@ -36,7 +36,7 @@ export default class RemoveUserFromChat extends Block<RemoveUserFromChatProps> {
       },
     });
     this.children.modal = new Modal({
-      content: new RemoveUserFromChatForm({}),
+      content: new RemoveUserFromChatForm({ label: "" }),
       showModal: this.props.showModal,
     });
   }

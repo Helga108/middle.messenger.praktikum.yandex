@@ -28,8 +28,8 @@
 .chat-block-column-2 {
   display: flex;
   flex-direction: column;
-  height: 100%;
   justify-content: center;
+  height: 100%;
 }
 
 .chat-block-column-2 {

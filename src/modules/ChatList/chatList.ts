@@ -27,7 +27,7 @@ class ChatListBase extends Block<ChatListProps> {
     this.children.chatThread.setProps(newProps);
     if (newProps.selectedChatId) {
       this.children.chatThread = new ChatThread({
-        messages: this.getMessages(),
+        messages: newProps.messages,
         selectedChatId: newProps.selectedChatId,
         userId: 233,
       });
@@ -39,7 +39,7 @@ class ChatListBase extends Block<ChatListProps> {
     ChatsController.fetchChats();
     this.children.chatsBlocks = new ChatsBlock({});
     this.children.chatThread = new ChatThread({
-      messages: this.getMessages(),
+      messages: store.getState().messages || [],
       selectedChatId: this.props.selectedChatId,
       userId: store.getState().userId,
     });
@@ -59,17 +59,6 @@ class ChatListBase extends Block<ChatListProps> {
         },
       },
     });
-  }
-
-  getMessages() {
-    if (store.getState().selectedChatId !== undefined) {
-      MessageController.connect({
-        userId: store.getState().user.id,
-        chatId: store.getState().selectedChatId,
-        token: store.getState().token,
-      });
-      // MessageController.getMessages({ offset: 0 });
-    }
   }
 
   render() {

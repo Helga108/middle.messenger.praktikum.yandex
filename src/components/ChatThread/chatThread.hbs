@@ -1,9 +1,9 @@
 <div class="chat-thread-wrapper">
 
-    {{#if messages}}
+    {{#if selectedChatId}}
     <div class="chat-thread-messages">
-      {{#each messages}}
-        {{#if this.my}}
+      {{#each chatMessages}}
+        {{#if this.isMine}}
         <div class="my-message">{{this.content}}</div>
         {{else}}
         <div class="others-message">{{this.content}}</div>

@@ -4,6 +4,7 @@ import template from "./messageInput.hbs";
 import { formData } from "../../utils/formData";
 import LabeledInput from "../LabeledInput/labeledInput";
 import MessageController from "../../controllers/MessageController";
+import store from "../../utils/Store";
 
 type MessageInputProps = {
   events?: {};
@@ -11,8 +12,6 @@ type MessageInputProps = {
 };
 
 export default class MessageInput extends Block<MessageInputProps> {
-  private _inputValue: string;
-
   constructor(props: MessageInputProps) {
     super(props);
   }
@@ -34,10 +33,13 @@ export default class MessageInput extends Block<MessageInputProps> {
     });
   }
 
-  handleSendMessage(e: Event, children) {
+  handleSendMessage(e: Event, children: any) {
     const data = formData(e, children, LabeledInput);
-    MessageController.sendMessage(data.message);
-    //this.children.messageInputField.setProps({ value: "" });
+    MessageController.sendMessage(
+      store.getState().selectedChatId,
+      data.message
+    );
+    this.children.messageInputField.setProps({ value: "" });
   }
 
   render() {

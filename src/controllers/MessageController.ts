@@ -1,110 +1,100 @@
+import WSTransport, { WSTransportEvents } from "../utils/WSTransport";
 import store from "../utils/Store";
-import router from "../utils/Router";
 
-class MessageController {
-  private _ws: WebSocket;
+export interface Message {
+  chat_id: number;
+  time: string;
+  type: string;
+  user_id: number;
+  content: string;
+  file?: {
+    id: number;
+    user_id: number;
+    path: string;
+    filename: string;
+    content_type: string;
+    content_size: number;
+    upload_date: string;
+  };
+}
 
-  private _chatId: number;
+class MessagesController {
+  private sockets: Map<number, WSTransport> = new Map();
 
-  private _userId: number;
+  async connect(id: number, token: string) {
+    if (this.sockets.has(id)) {
+      return;
+    }
 
-  private _token: string;
+    const userId = store.getState().user.id;
 
-  private _ping: any;
+    const wsTransport = new WSTransport(
+      `wss://ya-praktikum.tech/ws/chats/${userId}/${id}/${token}`
+    );
 
-  constructor() {
-    this._handleOpen = this._handleOpen.bind(this);
-    this._handleMessage = this._handleMessage.bind(this);
-    this._handleError = this._handleError.bind(this);
-    this._handleClose = this._handleClose.bind(this);
-    this.getMessages = this.getMessages.bind(this);
+    this.sockets.set(id, wsTransport);
+
+    await wsTransport.connect();
+
+    this.subscribe(wsTransport, id);
+    this.fetchOldMessages(id);
   }
 
-  _addEvents() {
-    this._ws.addEventListener("open", this._handleOpen);
-    this._ws.addEventListener("close", this._handleClose);
-    this._ws.addEventListener("message", this._handleMessage);
-    this._ws.addEventListener("error", this._handleError);
+  sendMessage(id: number, message: string) {
+    const socket = this.sockets.get(id);
+
+    if (!socket) {
+      throw new Error(`Chat ${id} is not connected`);
+    }
+
+    socket.send({
+      type: "message",
+      content: message,
+    });
   }
 
-  _handleOpen() {
-    console.log("Соединение установлено");
-    this._ping = setInterval(() => {
-      this._ws.send("");
-    }, 20000);
-    this.getMessages({ offset: 0 });
+  fetchOldMessages(id: number) {
+    const socket = this.sockets.get(id);
+
+    if (!socket) {
+      throw new Error(`Chat ${id} is not connected`);
+    }
+
+    socket.send({ type: "get old", content: "0" });
   }
 
-  _handleClose(e) {
-    if (e.wasClean) {
-      console.log("Соединение закрыто чисто");
+  closeAll() {
+    Array.from(this.sockets.values()).forEach((socket) => socket.close());
+  }
+
+  private onMessage(id: number, messages: Message | Message[]) {
+    let messagesToAdd: Message[] = [];
+
+    if (Array.isArray(messages)) {
+      messagesToAdd = messages.reverse();
     } else {
-      console.log("Обрыв соединения");
+      messagesToAdd.push(messages);
     }
 
-    console.log(`Код: ${e.code} | Причина: ${e.reason}`);
+    const currentMessages = (store.getState().messages || {})[id] || [];
+
+    messagesToAdd = [...currentMessages, ...messagesToAdd];
+
+    store.set(`messages.${id}`, messagesToAdd);
   }
 
-  _handleMessage(e) {
-    console.log("Получены данные", e.data);
-    const rawMessages = JSON.parse(e.data);
-    console.log("+++++", rawMessages);
-    const oldMessages = store.getState().messages || [];
-    if (Array.isArray(rawMessages)) {
-      const newMessages = rawMessages.map((msg: {}) => {
-        if (msg.user_id === store.getState().user.id) {
-          msg.my = true;
-        }
-        return msg;
-      });
-      store.set("messages", [...oldMessages, ...newMessages]);
-    }
+  private onClose(id: number) {
+    this.sockets.delete(id);
   }
 
-  _handleError(e) {
-    console.log("Ошибка", e.message);
-  }
-
-  connect(options) {
-    this._userId = options.userId;
-    this._chatId = options.chatId;
-    this._token = options.token;
-    this._ws = new WebSocket(
-      `wss://ya-praktikum.tech/ws/chats/${options.userId}/${options.chatId}/${options.token}`
+  private subscribe(transport: WSTransport, id: number) {
+    transport.on(WSTransportEvents.Message, (message: Message) =>
+      this.onMessage(id, message)
     );
-    this._addEvents();
-  }
-
-  getMessages(options) {
-    this._ws.send(
-      JSON.stringify({
-        content: options.offset.toString(),
-        type: "get old",
-      })
-    );
-  }
-
-  public sendMessage(message: string) {
-    this._ws.send(
-      JSON.stringify({
-        content: message,
-        type: "message",
-      })
-    );
-  }
-
-  private _clearEvents() {
-    this._ws.removeEventListener("open", this._handleOpen);
-    //this._ws.removeEventListener('message', this._handleMassage);
-    this._ws.removeEventListener("error", this._handleError);
-    this._ws.removeEventListener("close", this._handleClose);
-  }
-
-  public leave() {
-    clearInterval(this._ping);
-    this._ws.close();
-    this._clearEvents();
+    transport.on(WSTransportEvents.Close, () => this.onClose(id));
   }
 }
 
-export default new MessageController();
+const controller = new MessagesController();
+
+export default controller;

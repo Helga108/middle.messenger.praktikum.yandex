@@ -3,7 +3,7 @@ import Button from "../Button/button";
 import template from "./modal.hbs";
 
 interface ModalProps {
-  content: typeof Block;
+  content: any;
   events?: {
     click?: (e: Event) => void;
   };
@@ -21,7 +21,7 @@ export default class Modal extends Block<ModalProps> {
         click: () => {
           const modal = document.getElementById("myModal");
           this.setProps({ showModal: false });
-          modal?.classList.remove("showModal");
+          modal?.classList.remove("show-modal");
           console.log("closing modal");
         },
       },
@@ -29,20 +29,20 @@ export default class Modal extends Block<ModalProps> {
     });
     if (this.props.showModal) {
       const modal = document.getElementById("myModal");
-      modal?.classList.add("showModal");
+      modal?.classList.add("show-modal");
     } else {
       const modal = document.getElementById("myModal");
-      modal?.classList.remove("showModal");
+      modal?.classList.remove("show-modal");
     }
   }
 
-  componentDidUpdate(oldProps, newProps) {
+  protected componentDidUpdate(oldProps: any, newProps: any): boolean {
     if (newProps.showModal) {
       const modal = document.getElementById("myModal");
-      modal?.classList.add("showModal");
+      modal?.classList.add("show-modal");
     } else {
       const modal = document.getElementById("myModal");
-      modal?.classList.remove("showModal");
+      modal?.classList.remove("show-modal");
     }
     return true;
   }
