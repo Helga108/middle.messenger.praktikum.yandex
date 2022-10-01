@@ -31,6 +31,7 @@
     "eslint-config-airbnb-typescript": "17.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "2.26.0",
+    "mocha": "^10.0.0",
     "parcel": "2.7.0",
     "postcss": "8.4.16",
     "postcss-import": "14.1.0",
@@ -46,7 +47,7 @@
     "handlebars": "4.7.7",
     "nanoid": "4.0.0",
     "normalize.css": "8.0.1",
-    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-rational-order": "^0.0.4",
     "stylelint-order": "^5.0.0",
     "stylelint-prettier": "^2.0.0"
   },
