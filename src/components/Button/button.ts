@@ -6,8 +6,9 @@ interface ButtonProps {
   events?: {
     click?: (e: Event) => void;
   };
+  className?: string;
 }
-export default class Button extends Block {
+export default class Button extends Block<ButtonProps> {
   constructor(props: ButtonProps) {
     super(props);
   }

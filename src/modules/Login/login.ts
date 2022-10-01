@@ -2,13 +2,12 @@ import Block from "../../utils/Block";
 import template from "./login.hbs";
 import Button from "../../components/Button/button";
 import LabeledInput from "../../components/LabeledInput/labeledInput";
-import { validationPatternsLib } from "../../utils/ValidationPatternsLib";
+import { VALIDATION_PATTERN_LIB } from "../../utils/ValidationPatternsLib";
+import { formData } from "../../utils/formData";
+import AuthController from "../../controllers/AuthController";
 
-interface LoginProps {
-  title: string;
-}
-export default class Login extends Block {
-  constructor(props: LoginProps) {
+export default class Login extends Block<any> {
+  constructor(props: any) {
     super(props);
   }
 
@@ -22,8 +21,9 @@ export default class Login extends Block {
       },
       error: false,
       errorText: "Wrong login",
-      validationPattern: validationPatternsLib.login,
+      validationPattern: VALIDATION_PATTERN_LIB.login,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.inputPassword = new LabeledInput({
       name: "password",
@@ -34,13 +34,14 @@ export default class Login extends Block {
       },
       error: false,
       errorText: "Wrong password",
-      validationPattern: validationPatternsLib.password,
+      validationPattern: VALIDATION_PATTERN_LIB.password,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.button = new Button({
       label: "Log in",
       events: {
-        click: (e: Event) => this.submitLiginForm(e),
+        click: (e: Event) => this.submitLoginForm(e, this.children),
       },
     });
   }
@@ -49,25 +50,8 @@ export default class Login extends Block {
     return this.compile(template, this.props);
   }
 
-  submitLiginForm(e: Event) {
-    e.preventDefault();
-
-    const formResult: any = {};
-
-    Object.keys(this.children).forEach((child) => {
-      if (this.children[child] instanceof LabeledInput) {
-        (this.children[child] as LabeledInput).validate();
-      }
-    });
-
-    Object.keys(this.children).forEach((child) => {
-      if (this.children[child] instanceof LabeledInput) {
-        formResult[(this.children[child] as LabeledInput).getName()] = (
-          this.children[child] as LabeledInput
-        ).getInputValue();
-      }
-    });
-
-    console.log(formResult);
-  }
+  submitLoginForm = (e: Event, children: any) => {
+    const data = formData(e, children, LabeledInput);
+    AuthController.signin(data);
+  };
 }

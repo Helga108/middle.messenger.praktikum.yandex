@@ -1,97 +1,97 @@
-const METHODS = {
-  GET: "GET",
-  PUT: "PUT",
-  POST: "POST",
-  DELETE: "DELETE",
+export enum Method {
+  Get = "Get",
+  Post = "Post",
+  Put = "Put",
+  Patch = "Patch",
+  Delete = "Delete",
+}
+
+type Options = {
+  method: Method;
+  data?: any;
 };
 
-interface Options {
-  timeout?: number;
-  data?: object;
-  method: string;
-  headers?: object | object[];
-}
-
-function queryStringify(data: object): string {
-  const stingifiedData = Object.keys(data).reduce(
-    (acc: string, el: string) => acc.concat(`${el}=${(data as any)[el]}&`),
-    "?"
-  );
-  return stingifiedData.substring(0, stingifiedData.length - 1);
-}
 export default class HTTPTransport {
-  get = (url: string, options: Options) => {
-    return this.request(
-      url,
-      { ...options, method: METHODS.GET },
-      options.timeout
-    );
-  };
+  static API_URL = "https://ya-praktikum.tech/api/v2";
 
-  put = (url: string, options: Options) => {
-    if (options.data) {
-      (options as any).data = queryStringify(options.data);
-    }
-    return this.request(
-      url,
-      { ...options, method: METHODS.PUT },
-      options.timeout
-    );
-  };
+  protected endpoint: string;
 
-  post = (url: string, options: Options) => {
-    if (options.data) {
-      (options as any).data = queryStringify(options.data);
-    }
-    return this.request(
-      url,
-      { ...options, method: METHODS.POST },
-      options.timeout
-    );
-  };
+  constructor(endpoint: string) {
+    this.endpoint = `${HTTPTransport.API_URL}${endpoint}`;
+  }
 
-  delete = (url: string, options: Options) => {
-    if (options.data) {
-      (options as any).data = queryStringify(options.data);
-    }
-    return this.request(
-      url,
-      { ...options, method: METHODS.DELETE },
-      options.timeout
-    );
-  };
+  public get<Response>(path = "/"): Promise<Response> {
+    return this.request<Response>(this.endpoint + path);
+  }
 
-  request = (url: string, options: Options, timeout: number = 5000) => {
-    let { headers = {} }: any = options;
+  public post<Response = void>(
+    path: string,
+    data?: unknown
+  ): Promise<Response> {
+    return this.request<Response>(this.endpoint + path, {
+      method: Method.Post,
+      data,
+    });
+  }
+
+  public put<Response = void>(path: string, data: unknown): Promise<Response> {
+    return this.request<Response>(this.endpoint + path, {
+      method: Method.Put,
+      data,
+    });
+  }
+
+  public patch<Response = void>(
+    path: string,
+    data: unknown
+  ): Promise<Response> {
+    return this.request<Response>(this.endpoint + path, {
+      method: Method.Patch,
+      data,
+    });
+  }
+
+  public delete<Response>(path: string, data: unknown): Promise<Response> {
+    return this.request<Response>(this.endpoint + path, {
+      method: Method.Delete,
+      data,
+    });
+  }
+
+  private request<Response>(
+    url: string,
+    options: Options = { method: Method.Get }
+  ): Promise<Response> {
     const { method, data } = options;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      if (method === METHODS.GET && data) {
-        url = url + queryStringify(data);
-      }
       xhr.open(method, url);
 
-      xhr.onload = function () {
-        resolve(xhr);
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status < 400) {
+            resolve(xhr.response);
+          } else {
+            reject(xhr.response);
+          }
+        }
       };
 
-      xhr.onabort = reject;
+      xhr.onabort = () => reject({ reason: "abort" });
+      xhr.onerror = () => reject({ reason: "network error" });
+      xhr.ontimeout = () => reject({ reason: "timeout" });
 
-      xhr.onerror = reject;
+      xhr.setRequestHeader("Content-Type", "application/json");
 
-      xhr.ontimeout = reject;
+      xhr.withCredentials = true;
+      xhr.responseType = "json";
 
-      Object.keys(headers).forEach((key: any) => {
-        xhr.setRequestHeader(key, headers[key]);
-      });
-      xhr.timeout = timeout;
-
-      if (method === METHODS.GET || !data) {
+      if (method === Method.Get || !data) {
         xhr.send();
       } else {
         xhr.send(JSON.stringify(data));
       }
     });
-  };
+  }
 }
