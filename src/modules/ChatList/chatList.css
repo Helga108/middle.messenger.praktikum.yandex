@@ -18,9 +18,9 @@
 .chat-thread,
 .chats-list {
   display: flex;
+  justify-content: center;
   align-content: center;
   align-items: center;
-  justify-content: center;
   height: 100vh;
 }
 
