@@ -39,7 +39,7 @@ export default class MessageInput extends Block<MessageInputProps> {
       store.getState().selectedChatId,
       data.message
     );
-    this.children.messageInputField.setProps({ value: "" });
+    (this.children.messageInputField as Block<any>).setProps({ value: "" });
   }
 
   render() {

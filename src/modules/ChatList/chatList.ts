@@ -1,15 +1,11 @@
 import Block from "../../utils/Block";
 import template from "./chatList.hbs";
-
 import { ChatsBlock } from "../../components/ChatsBlock/chatsBlock";
-
-import { chatsData } from "../../mock/chatsData";
 import { ChatThread } from "../../components/ChatThread/chatThread";
 import store, { withStore } from "../../utils/Store";
 import Button from "../../components/Button/button";
 import AuthController from "../../controllers/AuthController";
 import ChatsController from "../../controllers/ChatsController";
-import MessageController from "../../controllers/MessageController";
 
 interface ChatListProps {
   title: string;
@@ -21,18 +17,6 @@ class ChatListBase extends Block<ChatListProps> {
   constructor(props: ChatListProps) {
     super(props);
     this.selectedChatId = null;
-  }
-
-  componentDidUpdate(oldProps, newProps) {
-    this.children.chatThread.setProps(newProps);
-    if (newProps.selectedChatId) {
-      this.children.chatThread = new ChatThread({
-        messages: newProps.messages,
-        selectedChatId: newProps.selectedChatId,
-        userId: 233,
-      });
-    }
-    return true;
   }
 
   init() {

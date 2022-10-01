@@ -11,14 +11,14 @@ import RemoveUserFromChatForm from "../RemoveUserFromChatForm/removeUserFromChat
 import MessageController from "../../controllers/MessageController";
 
 class ChatsBlockBase extends Block<any> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
   }
 
   init() {
     const chats = this.props.chats || [];
     console.log("____", chats);
-    let chatsBlocks = [];
+    let chatsBlocks: any = [];
     if (Array.isArray(chats)) {
       chats.forEach((chat: any) => {
         const chatBlock = new ChatBlock({
@@ -31,7 +31,6 @@ class ChatsBlockBase extends Block<any> {
           events: {
             click: () => {
               store.set("messages", []);
-              MessageController.leave();
               ChatsController.setSelectedChatId(chat.id);
             },
           },
@@ -89,9 +88,9 @@ class ChatsBlockBase extends Block<any> {
 
   onChatSelection(chat: { id: number }) {
     ChatsController.setSelectedChatId(chat.id);
-    ChatsController.getChatToken(chat.id).then(({ token }) => {
-      store.set("token", token);
-      this.getMessages(token);
+    ChatsController.getChatToken(chat.id).then((data: any) => {
+      store.set("token", data.token);
+      this.getMessages(data.token);
     });
   }
 

@@ -14,7 +14,7 @@ class Block<Props extends {}> {
 
   protected props: TProps;
 
-  public children: Record<string, Block<any>>;
+  public children: Record<string, Block<any> | Block<any>[]>;
 
   private eventBus: () => EventBus;
 

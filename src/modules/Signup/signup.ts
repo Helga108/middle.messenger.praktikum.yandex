@@ -119,6 +119,6 @@ export default class Signup extends Block<any> {
   submitSignupForm = (e: Event, children: any) => {
     const data = formData(e, children, LabeledInput);
     AuthController.signup(data);
-    ChatsController.fetchCats();
+    ChatsController.fetchChats();
   };
 }

@@ -24,7 +24,7 @@ export default class AddUserToChat extends Block<AddUserToChatProps> {
       label: "+",
       events: {
         click: () => {
-          this.children.modal.setProps({ showModal: true });
+          (this.children.modal as Block<any>).setProps({ showModal: true });
         },
       },
     });

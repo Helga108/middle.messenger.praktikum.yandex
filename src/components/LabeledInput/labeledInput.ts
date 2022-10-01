@@ -43,7 +43,7 @@ export default class LabeledInput extends Block<LabeledInputProps> {
   }
 
   onFocus() {
-    this.children.errorMessage.setProps({
+    (this.children.errorMessage as Block<any>).setProps({
       errorVisibilityClass: "error-hidden",
     });
   }
@@ -51,7 +51,7 @@ export default class LabeledInput extends Block<LabeledInputProps> {
   onBlur() {
     const validatationResult = this.validate();
     if (!validatationResult) {
-      this.children.errorMessage.setProps({
+      (this.children.errorMessage as Block<any>).setProps({
         errorVisibilityClass: "error-visible",
       });
     }
@@ -67,7 +67,7 @@ export default class LabeledInput extends Block<LabeledInputProps> {
   onChange(e: Event) {
     this.setProps({ value: (e.target as HTMLInputElement).value });
 
-    this.children.errorMessage.setProps({
+    (this.children.errorMessage as Block<any>).setProps({
       errorVisibilityClass: "error-hidden",
     });
   }

@@ -5,7 +5,6 @@ import LabeledInput from "../../components/LabeledInput/labeledInput";
 import { VALIDATION_PATTERN_LIB } from "../../utils/ValidationPatternsLib";
 import { formData } from "../../utils/formData";
 import AuthController from "../../controllers/AuthController";
-import ChatsController from "../../controllers/ChatsController";
 
 export default class Login extends Block<any> {
   constructor(props: any) {

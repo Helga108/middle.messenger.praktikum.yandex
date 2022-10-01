@@ -19,9 +19,9 @@ class ChatThreadBase extends Block<ChatThreadProps> {
     });
   }
 
-  protected componentDidUpdate(oldProps: any, newProps: any): boolean {
-    return true;
-  }
+  // protected componentDidUpdate(oldProps: any, newProps: any): boolean {
+  //   return true;
+  // }
 
   render() {
     console.log("messages", [...(this.props.chatMessages || [])]);
@@ -35,7 +35,7 @@ class ChatThreadBase extends Block<ChatThreadProps> {
 
 const withMessages = withStore((state) => ({
   selectedChat: (state.chats || []).find(
-    ({ id }) => id === state.selectedChatId
+    (chat: { id: number }) => chat.id === state.selectedChatId
   ),
   chatMessages: state.messages?.[state.selectedChatId],
 }));
