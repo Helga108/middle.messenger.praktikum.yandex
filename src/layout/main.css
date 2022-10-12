@@ -16,6 +16,7 @@
 @import "../modules/UserSettings/userSettings.css";
 @import "../modules/EditUserSettings/editUserSettings.css";
 @import "../modules/ChangePassword/changePassword.css";
+@import "../components/Modal/modal.css";
 
 body {
   min-width: 320px;
@@ -36,8 +37,8 @@ input:focus {
 .page-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   height: 100vh;
   margin: 0;
   padding: 0;

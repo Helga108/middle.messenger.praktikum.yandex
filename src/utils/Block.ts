@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { EventBus } from "./EventBus";
 
-type TProps = Record<string, any>;
+export type TProps = Record<string, any>;
 class Block<Props extends {}> {
   static EVENTS = {
     INIT: "init",
@@ -14,7 +14,7 @@ class Block<Props extends {}> {
 
   protected props: TProps;
 
-  public children: Record<string, Block<any>>;
+  public children: Record<string, Block<any> | Block<any>[]>;
 
   private eventBus: () => EventBus;
 
@@ -43,10 +43,12 @@ class Block<Props extends {}> {
 
   private _getChildrenAndProps(childrenAndProps: any) {
     const props: Record<string, any> = {};
-    const children: Record<string, Block<any>> = {};
+    const children: Record<string, Block<any> | Block<any>[]> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
-      if (value instanceof Block) {
+      if (Array.isArray(value) && value.every((v) => v instanceof Block)) {
+        children[key] = value;
+      } else if (value instanceof Block) {
         children[key] = value;
       } else {
         props[key] = value;
@@ -140,11 +142,11 @@ class Block<Props extends {}> {
       if (Array.isArray(component)) {
         contextAndStubs[name] = component.map(
           (childComponent) =>
-            `<div data-id="id-${(childComponent as Block<any>).id}"></div>`
+            `<div data-id="${(childComponent as Block<any>).id}"></div>`
         );
-        return;
+      } else {
+        contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
       }
-      contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
     });
 
     const html = template(contextAndStubs);
@@ -155,20 +157,20 @@ class Block<Props extends {}> {
 
     Object.entries(this.children).forEach(([, component]) => {
       if (Array.isArray(component)) {
-        const stub = component.map((cmp) => {
-          temp.content.querySelector(`[data-id="${cmp.id}"]`);
+        component.map((cmp) => {
+          const stub = temp.content.querySelector(`[data-id="${cmp.id}"]`);
+          if (!stub) return;
+          stub.replaceWith(cmp.getContent()!);
         });
-        return;
+      } else {
+        const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
+        if (!stub) {
+          return;
+        }
+        component.getContent()?.append(...Array.from(stub.childNodes));
+
+        stub.replaceWith(component.getContent()!);
       }
-      const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
-
-      if (!stub) {
-        return;
-      }
-
-      component.getContent()?.append(...Array.from(stub.childNodes));
-
-      stub.replaceWith(component.getContent()!);
     });
 
     return temp.content;

@@ -5,7 +5,8 @@ import settingsFormInput from "../../components/SettingsFormInput/settingsFormIn
 import lockIcon from "../../../static/icons/lock.svg";
 import { VALIDATION_PATTERN_LIB as validation } from "../../utils/ValidationPatternsLib";
 import SettingsFormInput from "../../components/SettingsFormInput/settingsFormInput";
-import { submitForm } from "../../utils/SubmitForm";
+import { formData } from "../../utils/formData";
+import UserController from "../../controllers/UserController";
 
 interface ChangePasswordProps {
   title: string;
@@ -23,10 +24,10 @@ export default class ChangePassword extends Block<ChangePasswordProps> {
       type: "password",
       validationPattern: validation.password,
       errorText: "Wrong password",
-      name: "old-password",
+      name: "oldPassword",
     });
     this.children.inputRepeatPassword = new settingsFormInput({
-      name: "new-password",
+      name: "newPassword",
       icon: lockIcon,
       label: "New password",
       value: "",
@@ -46,8 +47,10 @@ export default class ChangePassword extends Block<ChangePasswordProps> {
     });
   }
 
-  submitChanges = (e: Event, children: any) =>
-    submitForm(e, children, SettingsFormInput);
+  submitChanges = (e: Event, children: any) => {
+    const data: object = formData(e, children, SettingsFormInput);
+    UserController.changePassword(data);
+  };
 
   render() {
     return this.compile(template, this.props);

@@ -1,7 +1,7 @@
 import LabeledInput from "../components/LabeledInput/labeledInput";
 import Block from "./Block";
 
-export const submitForm = (
+export const formData = (
   e: Event,
   children: {
     [key: string]: Block<LabeledInput>;
@@ -20,6 +20,6 @@ export const submitForm = (
       ).getInputValue();
     }
   });
-
   console.log(formResult);
+  return formResult;
 };

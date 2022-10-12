@@ -1,16 +1,17 @@
 import Block from "../../utils/Block";
 import template from "./chatList.hbs";
-
-import ChatBlock from "../../components/ChatBlock/chatBlock";
-
-import { chatsData } from "../../mock/chatsData";
-import ChatThread from "../../components/ChatThread/chatThread";
+import { ChatsBlock } from "../../components/ChatsBlock/chatsBlock";
+import { ChatThread } from "../../components/ChatThread/chatThread";
+import store, { withStore } from "../../utils/Store";
+import Button from "../../components/Button/button";
+import AuthController from "../../controllers/AuthController";
+import ChatsController from "../../controllers/ChatsController";
 
 interface ChatListProps {
   title: string;
 }
 
-export default class ChatList extends Block<ChatListProps> {
+class ChatListBase extends Block<ChatListProps> {
   selectedChatId: number | null;
 
   constructor(props: ChatListProps) {
@@ -19,61 +20,37 @@ export default class ChatList extends Block<ChatListProps> {
   }
 
   init() {
-    this.children.chatBlock = new ChatBlock({
-      name: "AA",
-      avatarImg: "img",
-      lastMessageAbstract: "Last message....",
-      lastMessageTime: "12:30",
-      newMessagesCount: 1,
-      events: {
-        click: () => this.setSelectedChatId(),
-      },
-      selected: false,
-      wrapperClassName: "",
-    });
+    ChatsController.fetchChats();
+    this.children.chatsBlocks = new ChatsBlock({});
     this.children.chatThread = new ChatThread({
-      messages: this.getMessagesFromData(),
-      selectedChatId: this.selectedChatId,
-      userId: this.getUserIdFromData(),
+      messages: store.getState().messages || [],
+      selectedChatId: this.props.selectedChatId,
+      userId: store.getState().userId,
     });
-  }
-
-  getUserIdFromData() {
-    if (this.selectedChatId) {
-      return (chatsData as any).chats[this.selectedChatId].userId;
-    }
-  }
-
-  getMessagesFromData() {
-    if (this.selectedChatId) {
-      const msgs = (chatsData as any).chats[this.selectedChatId].messages;
-      const userId = this.getUserIdFromData();
-      const alteredMessages = msgs.map((msg: any) => {
-        msg.my = msg.authorId === userId;
-        return msg;
-      });
-
-      return alteredMessages;
-    } else {
-      return null;
-    }
-  }
-
-  setSelectedChatId() {
-    console.log("setting chat id");
-    this.selectedChatId = 41231312;
-    this.children.chatThread.setProps({
-      selectedChatId: 41231312,
-      messages: this.getMessagesFromData(),
-      userId: this.getUserIdFromData(),
+    this.children.button = new Button({
+      label: "logout",
+      events: {
+        click: () => {
+          AuthController.logout();
+        },
+      },
     });
-    this.children.chatBlock.setProps({
-      selected: true,
-      wrapperClassName: "chat-block-wrapper-selected",
+    this.children.createChat = new Button({
+      label: "+",
+      events: {
+        click: () => {
+          ChatsController.createChat({ title: "new chat" });
+        },
+      },
     });
   }
 
   render() {
+    console.log("chatsstate", this.props);
     return this.compile(template, this.props);
   }
 }
+
+const withChats = withStore((state) => ({ ...state }));
+
+export const ChatList = withChats(ChatListBase as typeof Block);

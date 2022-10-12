@@ -3,13 +3,12 @@ import template from "./signup.hbs";
 import Button from "../../components/Button/button";
 import LabeledInput from "../../components/LabeledInput/labeledInput";
 import { VALIDATION_PATTERN_LIB } from "../../utils/ValidationPatternsLib";
-import { submitForm } from "../../utils/SubmitForm";
+import { formData } from "../../utils/formData";
+import AuthController from "../../controllers/AuthController";
+import ChatsController from "../../controllers/ChatsController";
 
-interface SignupProps {
-  title: string;
-}
-export default class Signup extends Block<SignupProps> {
-  constructor(props: SignupProps) {
+export default class Signup extends Block<any> {
+  constructor(props: any) {
     super(props);
   }
 
@@ -25,6 +24,7 @@ export default class Signup extends Block<SignupProps> {
       errorText: "Wrong email",
       validationPattern: VALIDATION_PATTERN_LIB.email,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.inputLogin = new LabeledInput({
       name: "login",
@@ -37,9 +37,10 @@ export default class Signup extends Block<SignupProps> {
       errorText: "Wrong login",
       validationPattern: VALIDATION_PATTERN_LIB.login,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.inputName = new LabeledInput({
-      name: "name",
+      name: "first_name",
       type: "text",
       label: "Name",
       events: {
@@ -49,9 +50,10 @@ export default class Signup extends Block<SignupProps> {
       errorText: "Wrong name",
       validationPattern: VALIDATION_PATTERN_LIB.username,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.inputLastName = new LabeledInput({
-      name: "last-name",
+      name: "second_name",
       type: "text",
       label: "Last name",
       events: {
@@ -61,6 +63,7 @@ export default class Signup extends Block<SignupProps> {
       errorText: "Wrong last name",
       validationPattern: VALIDATION_PATTERN_LIB.username,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.inputPhone = new LabeledInput({
       name: "phone",
@@ -73,6 +76,7 @@ export default class Signup extends Block<SignupProps> {
       errorText: "Wrong phone",
       validationPattern: VALIDATION_PATTERN_LIB.phone,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.inputPassword = new LabeledInput({
       name: "password",
@@ -85,6 +89,7 @@ export default class Signup extends Block<SignupProps> {
       errorText: "Wrong password",
       validationPattern: VALIDATION_PATTERN_LIB.password,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.inputRepeatPassword = new LabeledInput({
       name: "repeat-password",
@@ -97,6 +102,7 @@ export default class Signup extends Block<SignupProps> {
       errorText: "Wrong password",
       validationPattern: VALIDATION_PATTERN_LIB.password,
       errorVisibilityClass: "",
+      value: "",
     });
     this.children.button = new Button({
       label: "Create account",
@@ -110,6 +116,9 @@ export default class Signup extends Block<SignupProps> {
     return this.compile(template, this.props);
   }
 
-  submitSignupForm = (e: Event, children: any) =>
-    submitForm(e, children, LabeledInput);
+  submitSignupForm = (e: Event, children: any) => {
+    const data = formData(e, children, LabeledInput);
+    AuthController.signup(data);
+    ChatsController.fetchChats();
+  };
 }
