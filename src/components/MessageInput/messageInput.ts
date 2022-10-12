@@ -7,7 +7,9 @@ import MessageController from "../../controllers/MessageController";
 import store from "../../utils/Store";
 
 type MessageInputProps = {
-  events?: {};
+  events?: {
+    click?: (e: Event) => void;
+  };
   label: string;
 };
 

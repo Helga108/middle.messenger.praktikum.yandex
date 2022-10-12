@@ -27,8 +27,8 @@ export default class ChatBlock extends Block<ChatBlockProps> {
     this.children.buttonDelete = new Button({
       label: "x",
       events: {
-        click: () => {
-          ChatsController.deleteChat(this.props.id);
+        click: async () => {
+          await ChatsController.deleteChat(this.props.id);
         },
       },
     });

@@ -4,7 +4,7 @@ import MessageInput from "../MessageInput/messageInput";
 import store, { withStore } from "../../utils/Store";
 
 interface ChatThreadProps {
-  messages: {};
+  messages: Record<string, string>;
   selectedChatId: number | null;
   userId: number;
 }
@@ -19,12 +19,7 @@ class ChatThreadBase extends Block<ChatThreadProps> {
     });
   }
 
-  // protected componentDidUpdate(oldProps: any, newProps: any): boolean {
-  //   return true;
-  // }
-
   render() {
-    console.log("messages", [...(this.props.chatMessages || [])]);
     return this.compile(template, {
       ...this.props,
       isMine: this.props.selectedChatId === this.props.selectedChat?.id,

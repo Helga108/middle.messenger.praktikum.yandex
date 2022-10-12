@@ -37,8 +37,6 @@ export default class AddUserToChatForm extends Block<AddUserToChatFormProps> {
     const data = formData(e, children, LabeledInput);
 
     ChatsController.addUsersToChat(data);
-
-    //ChatsController.addUsersToChat(userId, store.getState().selectedChatId);
   };
 
   render() {

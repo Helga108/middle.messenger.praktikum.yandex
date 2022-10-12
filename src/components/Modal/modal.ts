@@ -27,24 +27,22 @@ export default class Modal extends Block<ModalProps> {
       },
       className: "close",
     });
-    if (this.props.showModal) {
-      const modal = document.getElementById("myModal");
-      modal?.classList.add("show-modal");
-    } else {
-      const modal = document.getElementById("myModal");
-      modal?.classList.remove("show-modal");
-    }
+    this.toggle(this.props);
   }
 
   protected componentDidUpdate(oldProps: any, newProps: any): boolean {
-    if (newProps.showModal) {
+    this.toggle(newProps)
+    return true;
+  }
+
+  toggle(props: any) {
+    if (props.showModal) {
       const modal = document.getElementById("myModal");
       modal?.classList.add("show-modal");
     } else {
       const modal = document.getElementById("myModal");
       modal?.classList.remove("show-modal");
     }
-    return true;
   }
 
   render() {

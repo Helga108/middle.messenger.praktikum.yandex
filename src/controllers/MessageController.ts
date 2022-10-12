@@ -3,8 +3,8 @@ import store from "../utils/Store";
 
 export interface Message {
   chat_id: number;
-  time: string;
-  type: string;
+  time: Date;
+  type: 'message' | 'file';
   user_id: number;
   content: string;
   file?: {
