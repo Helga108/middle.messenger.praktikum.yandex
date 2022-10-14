@@ -15,6 +15,6 @@ require.extensions['.hbs'] = function (module, filename) {
 
   module.exports = Handlebars.compile(contents);
 }
-require.extensions['.pcss'] = function () {
+require.extensions['.css'] = function () {
   module.exports = () => ({});
 }

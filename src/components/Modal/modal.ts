@@ -25,7 +25,7 @@ export default class Modal extends Block<ModalProps> {
           console.log("closing modal");
         },
       },
-      className: "close",
+      className: [],
     });
     this.toggle(this.props);
   }

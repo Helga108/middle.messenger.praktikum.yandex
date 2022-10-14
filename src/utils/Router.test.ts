@@ -6,7 +6,7 @@ import Block from "./Block"
 
 
 
-describe.only('Router', () => {
+describe('Router', () => {
 
   global.window.history.back = () => {
     if (typeof window.onpopstate === 'function') {
