@@ -2,7 +2,7 @@ import Block from "../../utils/Block";
 import template from "./errorText.hbs";
 
 interface ErrorTextProps {
-  errorText?: string;
+  text?: string;
   error?: boolean;
   errorVisibilityClass: string;
 }

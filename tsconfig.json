@@ -1,6 +1,9 @@
 {
   "ts-node": {
-    "files": true
+    "files": true,
+    "compilerOptions": {
+      "module": "commonjs"
+    }
   },
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
@@ -22,5 +25,5 @@
     "moduleResolution": "Node"
   },
   "files": ["src/index.ts"],
-  "include": ["src/types/*.d.ts"]
+  "include": ["src/**/*", "./**/*.ts","src/types/*.d.ts"]
 }
