@@ -29,7 +29,8 @@ export default class Modal extends Block<ModalProps> {
     });
     this.toggle(this.props);
   }
-
+  
+  //@ts-ignore
   protected componentDidUpdate(oldProps: any, newProps: any): boolean {
     this.toggle(newProps)
     return true;

@@ -15,7 +15,8 @@ export default class RemoveUserFromChat extends Block<RemoveUserFromChatProps> {
   constructor(props: RemoveUserFromChatProps) {
     super(props);
   }
-
+  
+  //@ts-ignore
   componentDidUpdate(oldProps: any, newProps: any) {
     console.log(newProps);
     this.children.modal = new Modal({

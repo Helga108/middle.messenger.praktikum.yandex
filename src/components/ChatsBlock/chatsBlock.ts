@@ -43,6 +43,7 @@ class ChatsBlockBase extends Block<any> {
     this.children.chatsBlocks = chatsBlocks;
   }
 
+  //@ts-ignore
   protected componentDidUpdate(oldProps: any, newProps: any): boolean {
     if (newProps.chats !== undefined) {
       let chatsBlocks: any = [];
