@@ -1,61 +1,59 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-module.exports = {
-  mode: 'development',
-  entry: './src/index.ts',
+const isProduction = process.env.NODE_ENV == "production";
+
+const config = {
+  entry: "./src/index.ts",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'messenger.bundle.js'
-  },
-  plugins: [new HtmlWebpackPlugin({template: './src/index.html'})],
-  resolve: {
-    extensions: ['.ts', '.js', '.json']
+    path: path.resolve(__dirname, "dist"),
   },
   devServer: {
     open: true,
-    host: 'localhost',
+    host: "localhost",
+    historyApiFallback: true,
     port: 3000,
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "src/index.html",
+    })
+  ],
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)?$/,
-        use: [
-          {
-            loader: 'ts-loader',
-            options: {
-              configFile: path.resolve(__dirname, 'tsconfig.json'),
-            },
-          },
-        ],
-        exclude: /(node_modules)/
+        test: /\.(ts|tsx)$/i,
+        loader: "ts-loader",
+        exclude: ["/node_modules/"],
       },
       {
-        test: /\.svg$/,
-        loader: 'svg-inline-loader'
-    },
-    { test: /\.hbs$/, loader: "handlebars-loader" },
-    {
         test: /\.css$/i,
-        use: [
-          "style-loader",
-          "css-loader",
-          {
-            loader: "postcss-loader",
-            options: {
-              modules: true,
-              postcssOptions: {
-                plugins: [
-                  [
-                    "postcss-preset-env"
-                  ],
-                ],
-              },
-            },
-          },
-        ],
+        use: [{loader: "css-loader", options: {modules: true, importLoaders: 2}}, "postcss-loader", "style-loader"],
       },
-    ]
+      {
+        test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+        type: "asset",
+      },
+      { test: /\.hbs$/, 
+        loader: "handlebars-loader" },
+    ],
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
+    alias: {
+      handlebars: 'handlebars/dist/handlebars.min.js'
+    }
+  },
+};
+
+module.exports = () => {
+  if (isProduction) {
+    config.mode = "production";
+  } else {
+    config.mode = "development";
   }
+  return config;
 };

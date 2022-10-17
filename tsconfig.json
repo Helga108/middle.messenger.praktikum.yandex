@@ -3,6 +3,7 @@
     "files": true
   },
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "target": "es2016",
     "lib": ["ESNext", "DOM"],
     "module": "commonjs",
@@ -13,9 +14,13 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": true,
+    "allowJs": true,
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "skipLibCheck": true,
-  }
+    "moduleResolution": "Node"
+  },
+  "files": ["src/index.ts"],
+  "include": ["src/types/*.d.ts"]
 }
