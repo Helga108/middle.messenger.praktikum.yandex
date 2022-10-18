@@ -1,7 +1,7 @@
 {
-  "name": "my-webpack-project",
+  "name": "middle.messenger.praktikum.yandex",
   "version": "1.0.0",
-  "description": "My webpack project",
+  "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main.  ### ВАЖНО: pull request должен называться “Sprint i” (i — номер спринта).",
   "scripts": {
     "start": "npm run build && node ./server.js -port 3000",
     "build": "webpack --mode=production --node-env=production",
@@ -13,7 +13,8 @@
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
-    "serve": "webpack serve"
+    "serve": "webpack serve",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -44,8 +45,8 @@
     "eslint-config-airbnb-typescript": "17.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "2.26.0",
-    "handlebars-loader": "^1.7.2",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.0",
     "mocha": "^10.0.0",
     "parcel": "2.7.0",
     "postcss": "^8.4.18",
@@ -70,6 +71,7 @@
     "@anikin/parcel-transformer-handlebars-precompile": "1.0.1",
     "express": "4.18.1",
     "handlebars": "4.7.7",
+    "handlebars-loader": "^1.7.2",
     "jsdom": "^20.0.1",
     "nanoid": "^3.3.4",
     "normalize.css": "8.0.1",
