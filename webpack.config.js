@@ -30,9 +30,13 @@ const config = {
         exclude: ["/node_modules/"],
       },
       {
-        test: /\.css$/i,
-        use: [{loader: "css-loader", options: {modules: true, importLoaders: 2}}, "postcss-loader", "style-loader"],
-      },
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader'
+        ]
+    },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
