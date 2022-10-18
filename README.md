@@ -1,6 +1,6 @@
 Layout https://www.figma.com/file/n67SdZJId0fyaPjyqvuzgj/y_chat_layout?node-id=0%3A1
 
-Live app: https://splendorous-mochi-4457b0.netlify.app/
+Live app on Heroku: https://hlg-chat.herokuapp.com/
 
 Chat application, personal project.
 
@@ -10,4 +10,4 @@ Dev server: npm run dev
 
 Build: npm run build
 
-Tools used: TypeScript, PostCss, Handlebars
+Tools used: TypeScript, PostCss, Handlebars, Webpack
