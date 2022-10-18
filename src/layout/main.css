@@ -1,4 +1,4 @@
-@import "npm:normalize.css";
+@import "normalize.css";
 @import "./variables.css";
 @import "./fonts.css";
 @import "../components/Button/button.css";

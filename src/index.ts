@@ -1,3 +1,4 @@
+import "./layout/main.css";
 import { ChatList } from "./modules/ChatList/chatList";
 import HomePage from "./modules/Home/home";
 import Login from "./modules/Login/login";

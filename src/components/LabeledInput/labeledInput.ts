@@ -28,7 +28,7 @@ export default class LabeledInput extends Block<LabeledInputProps> {
 
   init() {
     this.children.errorMessage = new ErrorText({
-      errorText: this.props.errorText,
+      text: this.props.errorText,
       error: this.props.error,
       errorVisibilityClass: "error-hidden",
     });

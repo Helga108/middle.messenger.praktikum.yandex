@@ -36,6 +36,7 @@ export class UserAPI extends BaseAPI {
 
   create = undefined;
 
+  //@ts-ignore
   update(id: string, data: UserData) {
     return this.http.put("/profile", data);
   }

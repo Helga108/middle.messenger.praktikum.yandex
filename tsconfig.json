@@ -1,5 +1,12 @@
 {
+  "ts-node": {
+    "files": true,
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "target": "es2016",
     "lib": ["ESNext", "DOM"],
     "module": "commonjs",
@@ -10,9 +17,13 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": true,
+    "allowJs": true,
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "moduleResolution": "Node"
+  },
+  "files": ["src/index.ts"],
+  "include": ["src/**/*", "./**/*.ts","src/types/*.d.ts"]
 }

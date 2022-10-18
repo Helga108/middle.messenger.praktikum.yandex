@@ -106,6 +106,7 @@ class Block<Props extends {}> {
   }
 
   /* eslint @typescript-eslint/no-unused-vars: "off" */
+  //@ts-ignore
   protected componentDidUpdate(oldProps: object, newProps: object): boolean {
     return true;
   }
